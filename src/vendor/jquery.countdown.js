@@ -24,11 +24,16 @@
                     localStorage['jquery.countdown.ended_at'] = new Date().getTime() + settings.seconds * 1000;
                 }
                 var tick = function () {
-                    var current_time = parseInt(localStorage['jquery.countdown.ended_at']) - new Date().getTime();
+                    var ended_at = localStorage['jquery.countdown.ended_at'];
+                    var current_time = parseInt(ended_at) - new Date().getTime();
 
                     if (current_time < 0 || isNaN(current_time)) {
                         timer.clearTimer();
-                        settings.buzzer();
+
+                        // when not called clearTimer externally
+                        if (ended_at !== undefined) {
+                            settings.buzzer();
+                        }
                         if (settings.show_in_title) {
                             document.title = origin_title;
                         }

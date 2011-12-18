@@ -3,6 +3,9 @@ timerTemplate = require('templates/timer')
 class exports.WorkingView extends Backbone.View
   el: "#modal"
 
+  events:
+    "click #cancel": "resetTimer"
+
   render: ->
     @$(@el).html timerTemplate(title: "working")
     @$(@el).modal(backdrop: 'static', show: true)
@@ -30,6 +33,15 @@ class exports.WorkingView extends Backbone.View
       'pomodoro is done!'
     )
     notification.show()
+
+    # hide modal
+    @$(@el).modal('hide')
+
+    app.routers.main.navigate('home', true)
+
+
+  resetTimer: ->
+    $("#timer").clearTimer()
 
     # hide modal
     @$(@el).modal('hide')

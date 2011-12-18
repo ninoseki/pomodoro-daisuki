@@ -21,8 +21,9 @@ class exports.ColumnView extends Backbone.View
     $('.title-input').focus()
 
   update: =>
-    @model.save title: @$('.title-input').val()
-    $(@el).removeClass "editing"
+    title = if @$('.title-input').val() == '' then "new" else @$('.title-input').val()
+    @model.save title: title
+    $(@el).removeClass "editing"    
 
   remove: ->
     $(@el).remove()

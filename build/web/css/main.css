@@ -5,12 +5,15 @@
 .yellow{background:#f7ff00;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#f7ff00),color-stop(.76,#f7ff00))}
 .white{background-image:-webkit-gradient(linear,left bottom,left top,color-stop(.41,#faf7fa),color-stop(.71,#fafafa));background-image:-moz-linear-gradient(center bottom,#faf7fa 41%,#fafafa 71%)}
 .ribbon{position:absolute;top:-15px;left:-5px;height:25px;width:50px;border-left:1px dashed rgba(0,0,0,0.10);border-right:1px dashed rgba(0,0,0,0.10);-webkit-box-shadow:0 0 12px rgba(0,0,0,0.20);-moz-box-shadow:0 0 12px rgba(0,0,0,0.20);box-shadow:0 0 12px rgba(0,0,0,0.20);opacity:.9;-moz-transform:rotate(-25deg);-webkit-transform:rotate(-25deg)}
-#modal .modal-body{height:100px;margin-top:40px;text-align:center;font-family:"Lucida Sans Unicode" "Lucida Grande" sans-serif;font-size:80px;text-shadow:4px 4px 5px #d3d3d3;}
+#modal .modal-header #cancel{text-align:right}
+#modal .modal-body{min-height:100px;margin-top:40px;text-align:center;font-family:"Lucida Sans Unicode" "Lucida Grande" sans-serif;}
+#modal .modal-body #timer{font-size:80px;text-shadow:4px 4px 5px #d3d3d3}
 #modal .modal-body #stats{font-size:24px;text-shadow:none}
 html,body{background-image:url("../img/double_lined.png");margin:0;padding:0}
 body{padding-top:60px;}
 body .topbar .brand-image{float:left;display:block;vertical-align:middle;margin-right:10px}
-body .topbar #actions #new-column{display:inline}
+body .topbar .action-container{float:left;margin:5px 0 0 0;position:relative;}
+body .topbar .action-container #actions #new-column{display:inline}
 body #main{margin:0 auto;}
 body #main #new-note{position:absolute;top:0;left:0;padding-top:40px;}
 body #main #new-note a.addNote{text-align:center;font-weight:bold;padding:3px 5px;font-size:16px;text-decoration:none;-webkit-border-radius:1px;-moz-border-radius:1px;display:block;padding:25px 5px 5px;-webkit-box-shadow:0 3px 6px rgba(0,0,0,0.85);-moz-box-shadow:0 3px 6px rgba(0,0,0,0.65);vertical-align:middle;-webkit-transform:rotate(-4deg);-moz-transform:rotate(-4deg);float:left;margin:-5px 10px 0;color:#000;width:1em}

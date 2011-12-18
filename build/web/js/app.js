@@ -11902,11 +11902,16 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
                     localStorage['jquery.countdown.ended_at'] = new Date().getTime() + settings.seconds * 1000;
                 }
                 var tick = function () {
-                    var current_time = parseInt(localStorage['jquery.countdown.ended_at']) - new Date().getTime();
+                    var ended_at = localStorage['jquery.countdown.ended_at'];
+                    var current_time = parseInt(ended_at) - new Date().getTime();
 
                     if (current_time < 0 || isNaN(current_time)) {
                         timer.clearTimer();
-                        settings.buzzer();
+
+                        // when not called clearTimer externally
+                        if (ended_at !== undefined) {
+                            settings.buzzer();
+                        }
                         if (settings.show_in_title) {
                             document.title = origin_title;
                         }
@@ -12755,7 +12760,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
     
       __out.push(__sanitize(this.title));
     
-      __out.push('</h3>\n</div>\n<div class="modal-body">\n    <div id="timer"></div>\n</div>\n');
+      __out.push('</h3>\n</div>\n<div class="modal-body">\n    <div id="timer"></div>\n</div>\n<div class="modal-footer">\n    <button id="cancel" class="btn info">opps</button>\n</div>\n');
     
   }).call(__obj);
   __obj.safe = __objSafe, __obj.escape = __escape;
@@ -12802,8 +12807,10 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
     };
 
     ColumnView.prototype.update = function() {
+      var title;
+      title = this.$('.title-input').val() === '' ? "new" : this.$('.title-input').val();
       this.model.save({
-        title: this.$('.title-input').val()
+        title: title
       });
       return $(this.el).removeClass("editing");
     };
@@ -13170,6 +13177,10 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
 
     RestingView.prototype.el = "#modal";
 
+    RestingView.prototype.events = {
+      "click #cancel": "resetTimer"
+    };
+
     RestingView.prototype.render = function() {
       this.$(this.el).html(timerTemplate({
         title: "resting"
@@ -13195,6 +13206,12 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
       app.audios.alarm.play();
       notification = webkitNotifications.createNotification('build/web/img/tomato_32.png', 'notification', 'resting is done!');
       notification.show();
+      this.$(this.el).modal('hide');
+      return app.routers.main.navigate('home', true);
+    };
+
+    RestingView.prototype.resetTimer = function() {
+      $("#timer").clearTimer();
       this.$(this.el).modal('hide');
       return app.routers.main.navigate('home', true);
     };
@@ -13265,6 +13282,10 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
 
     WorkingView.prototype.el = "#modal";
 
+    WorkingView.prototype.events = {
+      "click #cancel": "resetTimer"
+    };
+
     WorkingView.prototype.render = function() {
       this.$(this.el).html(timerTemplate({
         title: "working"
@@ -13293,6 +13314,12 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
       app.audios.alarm.play();
       notification = webkitNotifications.createNotification('build/web/img/tomato_32.png', 'notification', 'pomodoro is done!');
       notification.show();
+      this.$(this.el).modal('hide');
+      return app.routers.main.navigate('home', true);
+    };
+
+    WorkingView.prototype.resetTimer = function() {
+      $("#timer").clearTimer();
       this.$(this.el).modal('hide');
       return app.routers.main.navigate('home', true);
     };
