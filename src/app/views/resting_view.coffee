@@ -7,13 +7,6 @@ class exports.RestingView extends Backbone.View
         @$(@el).html timerTemplate(title: "resting")
         @$(@el).modal(backdrop: 'static', show: true)
 
-        @$(@el).bind('hidden', ->
-            console.log 'hidden'
-        )
-        @$(@el).bind('shown', ->
-            console.log 'shown'
-        )
-
         @
 
     startTimer: (seconds) =>
