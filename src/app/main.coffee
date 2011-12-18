@@ -3,7 +3,7 @@ app.routers = {}
 app.models = {}
 app.collections = {}
 app.views = {}
-app.development = false
+app.development = true
 
 Notes = require('collections/notes_collection').Notes
 Columns = require('collections/columns_collection').Columns

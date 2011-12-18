@@ -11876,44 +11876,55 @@ try{r=Date.Grammar.start.call({},s);}catch(e){return null;}
 return((r[1].length===0)?r[0]:null);};Date.getParseFunction=function(fx){var fn=Date.Grammar.formats(fx);return function(s){var r=null;try{r=fn.call({},s);}catch(e){return null;}
 return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Date.getParseFunction(fx)(s);};
 
-(function($) {
+(function ($) {
     function configuration(settings) {
         return $.extend({
-            seconds: 60,
-            tick: function(timer, formatted_time) {
+            seconds:60,
+            tick:function (timer, formatted_time) {
             },
-            format: 'mm:ss',
-            reset: false,
-            buzzer: function() {
+            format:'mm:ss',
+            reset:false,
+            show_in_title:false,
+            origin_title:undefined,
+            buzzer:function () {
             }
         }, settings);
     }
 
     $.fn.extend({
-        startTimer: function(settings) {
+        startTimer:function (settings) {
             var timer = $(this);
             var settings = configuration(settings);
+            var origin_title = document.title;
 
-            return this.each(function() {
+            return this.each(function () {
                 if (localStorage['jquery.countdown.ended_at'] === undefined || settings.reset) {
                     localStorage['jquery.countdown.ended_at'] = new Date().getTime() + settings.seconds * 1000;
                 }
-                var tick = function() {
+                var tick = function () {
                     var current_time = parseInt(localStorage['jquery.countdown.ended_at']) - new Date().getTime();
-                    if (current_time < 0) {
+                    console.log(current_time);
+                    if (current_time < 0 || isNaN(current_time)) {
                         timer.clearTimer();
                         settings.buzzer();
+                        if (settings.show_in_title) {
+                            document.title = origin_title;
+                        }
+
                         return false;
                     } else {
-                        // var formatted_time = dateFormat(new Date(current_time), settings.format);
                         var formatted_time = new Date(current_time).toString(settings.format);
                         timer.text(formatted_time);
+                        if (settings.show_in_title) {
+                            document.title = formatted_time;
+                        }
+
                         return true;
                     }
                 };
 
                 if (tick()) {
-                    var interval = setInterval(function() {
+                    var interval = setInterval(function () {
                         if (!tick()) {
                             clearInterval(interval);
                         }
@@ -11921,8 +11932,8 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
                 }
             });
         },
-        clearTimer: function() {
-             localStorage.removeItem('jquery.countdown.ended_at');
+        clearTimer:function () {
+            localStorage.removeItem('jquery.countdown.ended_at');
         }
     });
 })(jQuery);
@@ -12123,7 +12134,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
 
   app.views = {};
 
-  app.development = false;
+  app.development = true;
 
   Notes = require('collections/notes_collection').Notes;
 
@@ -12682,11 +12693,19 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
     
       __out.push(__sanitize(this.title));
     
-      __out.push('</h3>\n</div>\n<div class="modal-body">\n    <p id="stats">You\'ve done ');
+      __out.push('</h3>\n</div>\n<div class="modal-body">\n    <p id="stats">\n        You\'ve done ');
     
       __out.push(__sanitize(this.count));
     
-      __out.push(' pomodoros today!</p>\n</div>\n');
+      __out.push('\n        ');
+    
+      if (this.count > 1) {
+        __out.push('\n            pomodoros\n        ');
+      } else {
+        __out.push('\n            pomodoro\n        ');
+      }
+    
+      __out.push('\n        today!\n    </p>\n</div>\n');
     
   }).call(__obj);
   __obj.safe = __objSafe, __obj.escape = __escape;
@@ -13164,6 +13183,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
       return $('#timer').startTimer({
         seconds: seconds,
         reset: false,
+        show_in_title: true,
         buzzer: this.buzzer
       });
     };
@@ -13257,6 +13277,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
       return $('#timer').startTimer({
         seconds: seconds,
         reset: false,
+        show_in_title: true,
         buzzer: this.buzzer
       });
     };

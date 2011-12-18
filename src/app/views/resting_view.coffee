@@ -10,7 +10,12 @@ class exports.RestingView extends Backbone.View
         @
 
     startTimer: (seconds) =>
-        $('#timer').startTimer(seconds: seconds, reset: false, buzzer: @buzzer)
+        $('#timer').startTimer(
+          seconds: seconds,
+          reset: false,
+          show_in_title: true,
+          buzzer: @buzzer
+        )
 
     buzzer: =>
         # show notification

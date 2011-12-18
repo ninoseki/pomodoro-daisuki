@@ -3,5 +3,13 @@
     <h3><%= @title %></h3>
 </div>
 <div class="modal-body">
-    <p id="stats">You've done <%= @count %> pomodoros today!</p>
+    <p id="stats">
+        You've done <%= @count %>
+        <% if (@count > 1): %>
+            pomodoros
+        <% else: %>
+            pomodoro
+        <% end %>
+        today!
+    </p>
 </div>
