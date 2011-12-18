@@ -23,7 +23,7 @@ class exports.ColumnView extends Backbone.View
   update: =>
     title = if @$('.title-input').val() == '' then "new" else @$('.title-input').val()
     @model.save title: title
-    $(@el).removeClass "editing"    
+    $(@el).removeClass "editing"
 
   remove: ->
     $(@el).remove()

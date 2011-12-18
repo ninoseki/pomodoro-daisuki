@@ -128,9 +128,9 @@ body
                     display none
                     cursor pointer
                     margin-left 10px
-                    width 24px
-                    height 24px
-                    background url('../img/minus_alt_24x24.png') no-repeat 0 0
+                    width 16px
+                    height 16px
+                    background url('../img/delete.png') no-repeat 0 0
 
             .editing .display, .edit
                 display none
@@ -139,13 +139,21 @@ body
                 .edit
                     display block
 
-                    input[type="text"]
+                    input[type=text]
                         height 26px
                         font-size 24px
                         line-height 36px
                         text-align center
                         background transparent
                         border none
+                        -webkit-box-shadow none
+                        -moz-box-shadow none
+                        box-shadow none
+
+                    input[type=text]:focus
+                        font-style italic
+                        font-color #484848
+                        outline none
 
         #add-column
 	        opacity .15
