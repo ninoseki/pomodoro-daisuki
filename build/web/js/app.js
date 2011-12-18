@@ -13157,12 +13157,6 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
         backdrop: 'static',
         show: true
       });
-      this.$(this.el).bind('hidden', function() {
-        return console.log('hidden');
-      });
-      this.$(this.el).bind('shown', function() {
-        return console.log('shown');
-      });
       return this;
     };
 
