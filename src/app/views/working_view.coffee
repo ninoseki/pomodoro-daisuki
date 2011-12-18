@@ -20,6 +20,9 @@ class exports.WorkingView extends Backbone.View
     # add pomodoro
     app.collections.pomodoros.create(created_at: new Date().getTime())
 
+    # ring alarm
+    app.audios.alarm.play()
+
     # show notification
     notification = webkitNotifications.createNotification(
       'build/web/img/tomato_32.png',

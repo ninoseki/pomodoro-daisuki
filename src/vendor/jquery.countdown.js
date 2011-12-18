@@ -25,7 +25,7 @@
                 }
                 var tick = function () {
                     var current_time = parseInt(localStorage['jquery.countdown.ended_at']) - new Date().getTime();
-                    
+
                     if (current_time < 0 || isNaN(current_time)) {
                         timer.clearTimer();
                         settings.buzzer();

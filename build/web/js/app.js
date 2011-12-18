@@ -11903,7 +11903,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
                 }
                 var tick = function () {
                     var current_time = parseInt(localStorage['jquery.countdown.ended_at']) - new Date().getTime();
-                    console.log(current_time);
+
                     if (current_time < 0 || isNaN(current_time)) {
                         timer.clearTimer();
                         settings.buzzer();
@@ -12178,6 +12178,8 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
       app.views.working = new WorkingView();
       app.views.resting = new RestingView();
       app.views.stats = new StatsView();
+      app.audios = {};
+      app.audios.alarm = new Audio("build/web/audio/alarm.wav");
       app.collections.states.fetch();
       currentStateName = app.collections.states.getCurrentStateName();
       currentStateName = currentStateName === void 0 ? 'home' : currentStateName;
@@ -13190,6 +13192,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
 
     RestingView.prototype.buzzer = function() {
       var notification;
+      app.audios.alarm.play();
       notification = webkitNotifications.createNotification('build/web/img/tomato_32.png', 'notification', 'resting is done!');
       notification.show();
       this.$(this.el).modal('hide');
@@ -13287,6 +13290,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
       app.collections.pomodoros.create({
         created_at: new Date().getTime()
       });
+      app.audios.alarm.play();
       notification = webkitNotifications.createNotification('build/web/img/tomato_32.png', 'notification', 'pomodoro is done!');
       notification.show();
       this.$(this.el).modal('hide');

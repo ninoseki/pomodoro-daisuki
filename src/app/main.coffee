@@ -24,30 +24,33 @@ MainRouter = require('routers/main_router').MainRouter
 
 # app bootstrapping on document ready
 $(document).ready ->
-    app.initialize = ->
-        app.routers.main = new MainRouter()
+  app.initialize = ->
+    app.routers.main = new MainRouter()
 
-        app.collections.notes = new Notes()
-        app.collections.columns = new Columns()
-        app.collections.states = new States()
-        app.collections.pomodoros = new Pomodoros()
+    app.collections.notes = new Notes()
+    app.collections.columns = new Columns()
+    app.collections.states = new States()
+    app.collections.pomodoros = new Pomodoros()
 
-        app.views.home = new HomeView()
-        app.views.notes = new NotesView()
-        app.views.new_note = new NewNoteView()
-        app.views.columns = new ColumnsView()
-        app.views.new_column = new NewColumnView()
-        app.views.working = new WorkingView()
-        app.views.resting = new RestingView()
-        app.views.stats = new StatsView()
+    app.views.home = new HomeView()
+    app.views.notes = new NotesView()
+    app.views.new_note = new NewNoteView()
+    app.views.columns = new ColumnsView()
+    app.views.new_column = new NewColumnView()
+    app.views.working = new WorkingView()
+    app.views.resting = new RestingView()
+    app.views.stats = new StatsView()
 
-        # fetch data from localStorage
-        app.collections.states.fetch()
-        currentStateName = app.collections.states.getCurrentStateName()
+    app.audios = {}
+    app.audios.alarm = new Audio("build/web/audio/alarm.wav")
 
-        # go to current-state
-        currentStateName = if currentStateName == undefined then 'home' else currentStateName
-        app.routers.main.navigate currentStateName, true if Backbone.history.getFragment() is ''
-        
-    app.initialize()
-    Backbone.history.start()
+    # fetch data from localStorage
+    app.collections.states.fetch()
+    currentStateName = app.collections.states.getCurrentStateName()
+
+    # go to current-state
+    currentStateName = if currentStateName == undefined then 'home' else currentStateName
+    app.routers.main.navigate currentStateName, true if Backbone.history.getFragment() is ''
+
+  app.initialize()
+  Backbone.history.start()
