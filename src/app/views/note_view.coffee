@@ -11,6 +11,9 @@ class exports.NoteView extends Backbone.View
         "resize"        : "updateSize"
         "click .delete" : "clear"
 
+    initialize: ->
+        @model.view = @
+        
     render: ->
         $(@el).html noteTemplate(note: @model.toJSON())
 
@@ -21,6 +24,7 @@ class exports.NoteView extends Backbone.View
             "height"            : @model.get('h')
             "left"              : @model.get('x')
             "top"               : @model.get('y')
+            "position"          : "absolute"
         )
         
         $(@el).draggable(
@@ -32,9 +36,6 @@ class exports.NoteView extends Backbone.View
         )
         
         @
-
-    initialize: ->
-        @model.view = @
 
     focus: (event) ->
         if event.currentTarget.value == 'click here to write' then event.currentTarget.value = ''

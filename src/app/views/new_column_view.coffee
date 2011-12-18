@@ -7,7 +7,8 @@ class exports.NewColumnView extends Backbone.View
         "click #add-column": "create"
 
     render: ->
-        $(@el).html newColumnTemplate()
+        @$(@el).html newColumnTemplate()
+
         @
 
     create: ->

@@ -12123,7 +12123,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
 
   app.views = {};
 
-  app.development = true;
+  app.development = false;
 
   Notes = require('collections/notes_collection').Notes;
 
@@ -12888,9 +12888,9 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
 
     HomeView.prototype.render = function() {
       this.$(this.el).html("");
-      this.$(this.el).append(app.views.new_note.render().el);
       this.$(this.el).append(app.views.notes.render().el);
       this.$(this.el).append(app.views.columns.render().el);
+      this.$(this.el).append(app.views.new_note.render().el);
       $("#actions").append(app.views.new_column.render().el);
       return this;
     };
@@ -12921,7 +12921,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
     };
 
     NewColumnView.prototype.render = function() {
-      $(this.el).html(newColumnTemplate());
+      this.$(this.el).html(newColumnTemplate());
       return this;
     };
 
@@ -12958,6 +12958,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
 
     NewNoteView.prototype.render = function() {
       this.$(this.el).html(newNoteTemplate());
+      this.delegateEvents();
       return this;
     };
 
@@ -12999,6 +13000,10 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
       "click .delete": "clear"
     };
 
+    NoteView.prototype.initialize = function() {
+      return this.model.view = this;
+    };
+
     NoteView.prototype.render = function() {
       $(this.el).html(noteTemplate({
         note: this.model.toJSON()
@@ -13009,7 +13014,8 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
         "width": this.model.get('w'),
         "height": this.model.get('h'),
         "left": this.model.get('x'),
-        "top": this.model.get('y')
+        "top": this.model.get('y'),
+        "position": "absolute"
       });
       $(this.el).draggable({
         containment: 'parent',
@@ -13019,10 +13025,6 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
         containment: 'parent'
       });
       return this;
-    };
-
-    NoteView.prototype.initialize = function() {
-      return this.model.view = this;
     };
 
     NoteView.prototype.focus = function(event) {

@@ -8,6 +8,7 @@ class exports.NewNoteView extends Backbone.View
 
     render: ->
         @$(@el).html newNoteTemplate()
+        @delegateEvents()
         @
 
     create: (event) ->
