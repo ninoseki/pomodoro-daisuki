@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pomodoro Daisuki</title>
+
+    <link rel="shortcut icon" href="build/web/img/tomato_16.png" type="image/png"/>
+    <link rel="stylesheet" href="build/web/css/jquery-ui-1.8.16.custom.css" type="text/css"/>
+    <link rel="stylesheet" href="build/web/css/bootstrap.css" type="text/css"/>
+
+    <link rel="stylesheet" href="build/web/css/main.css" type="text/css" media="screen">
+    
+    <script src="build/web/js/app.js"></script>
+    <script>require('main');</script>
+</head>
+<body>
+<!-- topbar -->
+<div class="topbar">
+    <div class="fill">
+        <div class="container">
+            <img class="brand-image" src="build/web/img/tomato_32.png" alt="tomato">
+            <a class="brand" href="#">Pomodoro Daisuki</a>
+            
+            <span id="actions">
+                <a href="#working">
+                    <button id="start-pomodoro" class="btn primary">Start Pomodoro</button>
+                </a>
+                <a href="#resting/300">
+                    <button id="take-a-short-break" class="btn success">Take a short break</button>
+                </a>
+                <a href="#resting/900">
+                    <button id="take-a-long-break" class="btn success">Take a long break</button>
+                </a>
+            </span>
+            <span style="margin-left: 5px">
+                <a href="#stats">
+                    <button class="btn">Show stats</button>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+</div>
+<!-- /topbar -->
+
+<!-- main -->
+<div id ="main"></div>
+<!-- /main -->
+
+<!-- modal -->
+<div id="modal" class="modal hide fade"></div>
+<!-- modal -->
+
+
+</body>
+</html>

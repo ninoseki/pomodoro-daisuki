@@ -1,0 +1,10 @@
+dependencies:
+  - ConsoleDummy.js
+  - jquery-1.6.2.js
+  - jquery-ui.1.8.11.min.js
+  - underscore-1.1.7.js
+  - backbone-0.5.3.js
+  - backbone.localStorage.js
+  - bootstrap-modal.js
+  - date.js
+  - jquery.countdown.js

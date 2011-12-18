@@ -1,0 +1,3 @@
+<div class="ribbon <%= @note.color %>"/>
+<div class="delete">x</div>
+<textarea class="textedit"><%= @note.content %></textarea>

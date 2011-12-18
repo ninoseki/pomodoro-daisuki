@@ -1,0 +1,7 @@
+<div class="modal-header">
+    <a href="#" class="close">&times;</a>
+    <h3><%= @title %></h3>
+</div>
+<div class="modal-body">
+    <p id="stats">You've done <%= @count %> pomodoros today!</p>
+</div>
