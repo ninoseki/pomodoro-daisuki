@@ -40,7 +40,8 @@
 
                         return false;
                     } else {
-                        var formatted_time = new Date(current_time).toString(settings.format);
+                        // var formatted_time = new Date(current_time).toString(settings.format);
+                        var formatted_time = moment(current_time).format(settings.format);
                         timer.text(formatted_time);
                         if (settings.show_in_title) {
                             document.title = formatted_time;

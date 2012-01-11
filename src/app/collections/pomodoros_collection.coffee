@@ -2,18 +2,17 @@ Pomodoro = require('models/pomodoro_model').Pomodoro
 
 class exports.Pomodoros extends Backbone.Collection
 
-    model: Pomodoro
+  model: Pomodoro
 
-    initialize: ->
-        @localStorage = new Store "pomodoros"
+  initialize: ->
+    @localStorage = new Store "pomodoros"
 
-    clear: ->
-        format = 'yyyy-MM-dd'
-        today = new Date().toString format
+  clear: ->
+    today = moment().format(app.settings.date_format)
 
-        clone_models = _.clone @models
-        _.each(clone_models, (pomodoro) ->
-            date = new Date(pomodoro.get 'created_at').toString format
-            if today > date
-                pomodoro.destroy()
-        )
+    clone_models = _.clone @models
+    _.each(clone_models, (pomodoro) ->
+      date = moment(parseInt((pomodoro.get('created_at')))).format(format)
+      if today > date
+        pomodoro.destroy()
+    )

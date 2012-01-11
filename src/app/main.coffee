@@ -44,6 +44,9 @@ $(document).ready ->
     app.audios = {}
     app.audios.alarm = new Audio("build/web/audio/alarm.wav")
 
+    app.settings = {}
+    app.settings.date_format = "YYYY-MM-DD"
+
     # fetch data from localStorage
     app.collections.states.fetch()
     currentStateName = app.collections.states.getCurrentStateName()

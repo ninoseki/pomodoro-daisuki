@@ -6,5 +6,6 @@ dependencies:
   - backbone-0.5.3.js
   - backbone.localStorage.js
   - bootstrap-modal.js
-  - date.js
+  - moment.min.js
   - jquery.countdown.js
+  - highcharts.js

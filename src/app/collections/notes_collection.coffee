@@ -2,7 +2,7 @@ Note = require('models/note_model').Note
 
 class exports.Notes extends Backbone.Collection
 
-    model: Note
+  model: Note
 
-    initialize: ->
-        @localStorage = new Store "notes"
+  initialize: ->
+    @localStorage = new Store "notes"

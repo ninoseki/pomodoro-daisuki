@@ -7,7 +7,7 @@ class exports.WorkingView extends Backbone.View
     "click #cancel": "resetTimer"
 
   render: ->
-    @$(@el).html timerTemplate(title: "working")
+    @$(@el).html timerTemplate(title: "Working")
     @$(@el).modal(backdrop: 'static', show: true)
     @
 

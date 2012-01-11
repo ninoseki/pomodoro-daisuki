@@ -7,18 +7,18 @@ class exports.RestingView extends Backbone.View
     "click #cancel": "resetTimer"
 
   render: ->
-    @$(@el).html timerTemplate(title: "resting")
+    @$(@el).html timerTemplate(title: "Resting")
     @$(@el).modal(backdrop: 'static', show: true)
 
     @
 
   startTimer: (seconds) =>
-      $('#timer').startTimer(
-        seconds: seconds,
-        reset: false,
-        show_in_title: true,
-        buzzer: @buzzer
-      )
+    $('#timer').startTimer(
+      seconds: seconds,
+      reset: false,
+      show_in_title: true,
+      buzzer: @buzzer
+    )
 
   buzzer: =>
     # ring alarm
