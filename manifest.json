@@ -13,5 +13,5 @@
    },
    "name": "Pomodoro Daisuki",
    "permissions": [ "notifications", "tabs" ],
-   "version": "0.44"
+   "version": "0.45"
 }
