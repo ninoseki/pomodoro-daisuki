@@ -1,0 +1,10 @@
+<div class="display">
+    <h2><%= @column.title %><span class="column-destroy"></span></h2>
+</div>
+<div class="edit">
+    <input class="title-input" type="text" value="<%= @column.title %>">
+</div>
+
+<% if (@column.index > 0): %>
+    <div class="border-right"/>
+<% end %>
