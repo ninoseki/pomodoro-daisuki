@@ -3041,13 +3041,6 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .yellow{background:#f7ff00;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#f7ff00),color-stop(.76,#f7ff00))}
 .white{background-image:-webkit-gradient(linear,left bottom,left top,color-stop(.41,#faf7fa),color-stop(.71,#fafafa));background-image:-moz-linear-gradient(center bottom,#faf7fa 41%,#fafafa 71%)}
 .ribbon{position:absolute;top:-15px;left:-5px;height:25px;width:50px;border-left:1px dashed rgba(0,0,0,0.10);border-right:1px dashed rgba(0,0,0,0.10);-webkit-box-shadow:0 0 12px rgba(0,0,0,0.20);-moz-box-shadow:0 0 12px rgba(0,0,0,0.20);box-shadow:0 0 12px rgba(0,0,0,0.20);opacity:.9;-moz-transform:rotate(-25deg);-webkit-transform:rotate(-25deg)}
-.postit{background:#f7f268;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#f7f268),color-stop(.76,#f7f48f))}
-.purple{background:#ff00d4;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#d801b4),color-stop(.76,#ff00d4))}
-.green{background:#61bd00;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#61bd00),color-stop(.76,#61bd00))}
-.orange{background:#ff9100;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#ff9100),color-stop(.76,#ff9100))}
-.yellow{background:#f7ff00;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#f7ff00),color-stop(.76,#f7ff00))}
-.white{background-image:-webkit-gradient(linear,left bottom,left top,color-stop(.41,#faf7fa),color-stop(.71,#fafafa));background-image:-moz-linear-gradient(center bottom,#faf7fa 41%,#fafafa 71%)}
-.ribbon{position:absolute;top:-15px;left:-5px;height:25px;width:50px;border-left:1px dashed rgba(0,0,0,0.10);border-right:1px dashed rgba(0,0,0,0.10);-webkit-box-shadow:0 0 12px rgba(0,0,0,0.20);-moz-box-shadow:0 0 12px rgba(0,0,0,0.20);box-shadow:0 0 12px rgba(0,0,0,0.20);opacity:.9;-moz-transform:rotate(-25deg);-webkit-transform:rotate(-25deg)}
 #modal .modal-header #cancel{text-align:right}
 #modal .modal-body{min-height:100px;margin-top:40px;text-align:center;font-family:"Lucida Sans Unicode" "Lucida Grande" sans-serif;}
 #modal .modal-body #timer{font-size:80px;text-shadow:4px 4px 5px #d3d3d3}
@@ -3077,6 +3070,13 @@ body #main #columns .editing .edit input[type=text]{height:26px;font-size:24px;l
 body #main #columns .editing .edit input[type=text]:focus{font-style:italic;font-color:#484848;outline:none}
 body #main #add-column{opacity:.15}
 body #main #add-column:hover{opacity:.5}
+.postit{background:#f7f268;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#f7f268),color-stop(.76,#f7f48f))}
+.purple{background:#ff00d4;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#d801b4),color-stop(.76,#ff00d4))}
+.green{background:#61bd00;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#61bd00),color-stop(.76,#61bd00))}
+.orange{background:#ff9100;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#ff9100),color-stop(.76,#ff9100))}
+.yellow{background:#f7ff00;background:-webkit-gradient(linear,left bottom,left top,color-stop(.25,#f7ff00),color-stop(.76,#f7ff00))}
+.white{background-image:-webkit-gradient(linear,left bottom,left top,color-stop(.41,#faf7fa),color-stop(.71,#fafafa));background-image:-moz-linear-gradient(center bottom,#faf7fa 41%,#fafafa 71%)}
+.ribbon{position:absolute;top:-15px;left:-5px;height:25px;width:50px;border-left:1px dashed rgba(0,0,0,0.10);border-right:1px dashed rgba(0,0,0,0.10);-webkit-box-shadow:0 0 12px rgba(0,0,0,0.20);-moz-box-shadow:0 0 12px rgba(0,0,0,0.20);box-shadow:0 0 12px rgba(0,0,0,0.20);opacity:.9;-moz-transform:rotate(-25deg);-webkit-transform:rotate(-25deg)}
 #modal .modal-header #cancel{text-align:right}
 #modal .modal-body{min-height:100px;margin-top:40px;text-align:center;font-family:"Lucida Sans Unicode" "Lucida Grande" sans-serif;}
 #modal .modal-body #timer{font-size:80px;text-shadow:4px 4px 5px #d3d3d3}
