@@ -13021,6 +13021,162 @@ i.rotate(null)}:function(){t=j.selected;n()});if(c){this.element.bind("tabsshow"
   }
 }));
 (this.require.define({
+  "collections/states_collection": function(exports, require, module) {
+    (function() {
+  var State,
+    __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+
+  State = require('models/state_model').State;
+
+  exports.States = (function(_super) {
+
+    __extends(States, _super);
+
+    function States() {
+      States.__super__.constructor.apply(this, arguments);
+    }
+
+    States.prototype.model = State;
+
+    States.prototype.initialize = function() {
+      return this.localStorage = new Store("state");
+    };
+
+    States.prototype.getCurrentState = function() {
+      var first;
+      first = this.first();
+      if (first === void 0) first = this.create();
+      return first;
+    };
+
+    States.prototype.getCurrentStateName = function() {
+      var currentState;
+      currentState = this.getCurrentState();
+      return currentState.get('name');
+    };
+
+    States.prototype.setCurrentStateName = function(name) {
+      var currentState;
+      currentState = this.getCurrentState();
+      return currentState.save({
+        name: name
+      });
+    };
+
+    return States;
+
+  })(Backbone.Collection);
+
+}).call(this);
+
+  }
+}));
+(this.require.define({
+  "collections/notes_collection": function(exports, require, module) {
+    (function() {
+  var Note,
+    __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+
+  Note = require('models/note_model').Note;
+
+  exports.Notes = (function(_super) {
+
+    __extends(Notes, _super);
+
+    function Notes() {
+      Notes.__super__.constructor.apply(this, arguments);
+    }
+
+    Notes.prototype.model = Note;
+
+    Notes.prototype.initialize = function() {
+      return this.localStorage = new Store("notes");
+    };
+
+    return Notes;
+
+  })(Backbone.Collection);
+
+}).call(this);
+
+  }
+}));
+(this.require.define({
+  "collections/columns_collection": function(exports, require, module) {
+    (function() {
+  var Column,
+    __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+
+  Column = require('models/column_model').Column;
+
+  exports.Columns = (function(_super) {
+
+    __extends(Columns, _super);
+
+    function Columns() {
+      Columns.__super__.constructor.apply(this, arguments);
+    }
+
+    Columns.prototype.model = Column;
+
+    Columns.prototype.initialize = function() {
+      return this.localStorage = new Store("columns");
+    };
+
+    return Columns;
+
+  })(Backbone.Collection);
+
+}).call(this);
+
+  }
+}));
+(this.require.define({
+  "collections/pomodoros_collection": function(exports, require, module) {
+    (function() {
+  var Pomodoro,
+    __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+
+  Pomodoro = require('models/pomodoro_model').Pomodoro;
+
+  exports.Pomodoros = (function(_super) {
+
+    __extends(Pomodoros, _super);
+
+    function Pomodoros() {
+      Pomodoros.__super__.constructor.apply(this, arguments);
+    }
+
+    Pomodoros.prototype.model = Pomodoro;
+
+    Pomodoros.prototype.initialize = function() {
+      return this.localStorage = new Store("pomodoros");
+    };
+
+    Pomodoros.prototype.clear = function() {
+      var clone_models, today;
+      today = moment().format(app.settings.date_format);
+      clone_models = _.clone(this.models);
+      return _.each(clone_models, function(pomodoro) {
+        var date;
+        date = moment(parseInt(pomodoro.get('created_at'))).format(format);
+        if (today > date) return pomodoro.destroy();
+      });
+    };
+
+    return Pomodoros;
+
+  })(Backbone.Collection);
+
+}).call(this);
+
+  }
+}));
+(this.require.define({
   "initialize": function(exports, require, module) {
     (function() {
   var BrunchApplication, Columns, ColumnsView, HomeView, MainRouter, NewColumnView, NewNoteView, Notes, NotesView, Pomodoros, RestingView, States, StatsView, WorkingView,
@@ -13134,28 +13290,6 @@ i.rotate(null)}:function(){t=j.selected;n()});if(c){this.element.bind("tabsshow"
   }
 }));
 (this.require.define({
-  "models/pomodoro_model": function(exports, require, module) {
-    (function() {
-  var __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-
-  exports.Pomodoro = (function(_super) {
-
-    __extends(Pomodoro, _super);
-
-    function Pomodoro() {
-      Pomodoro.__super__.constructor.apply(this, arguments);
-    }
-
-    return Pomodoro;
-
-  })(Backbone.Model);
-
-}).call(this);
-
-  }
-}));
-(this.require.define({
   "models/note_model": function(exports, require, module) {
     (function() {
   var __hasProp = Object.prototype.hasOwnProperty,
@@ -13185,162 +13319,6 @@ i.rotate(null)}:function(){t=j.selected;n()});if(c){this.element.bind("tabsshow"
     return Note;
 
   })(Backbone.Model);
-
-}).call(this);
-
-  }
-}));
-(this.require.define({
-  "collections/columns_collection": function(exports, require, module) {
-    (function() {
-  var Column,
-    __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-
-  Column = require('models/column_model').Column;
-
-  exports.Columns = (function(_super) {
-
-    __extends(Columns, _super);
-
-    function Columns() {
-      Columns.__super__.constructor.apply(this, arguments);
-    }
-
-    Columns.prototype.model = Column;
-
-    Columns.prototype.initialize = function() {
-      return this.localStorage = new Store("columns");
-    };
-
-    return Columns;
-
-  })(Backbone.Collection);
-
-}).call(this);
-
-  }
-}));
-(this.require.define({
-  "collections/pomodoros_collection": function(exports, require, module) {
-    (function() {
-  var Pomodoro,
-    __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-
-  Pomodoro = require('models/pomodoro_model').Pomodoro;
-
-  exports.Pomodoros = (function(_super) {
-
-    __extends(Pomodoros, _super);
-
-    function Pomodoros() {
-      Pomodoros.__super__.constructor.apply(this, arguments);
-    }
-
-    Pomodoros.prototype.model = Pomodoro;
-
-    Pomodoros.prototype.initialize = function() {
-      return this.localStorage = new Store("pomodoros");
-    };
-
-    Pomodoros.prototype.clear = function() {
-      var clone_models, today;
-      today = moment().format(app.settings.date_format);
-      clone_models = _.clone(this.models);
-      return _.each(clone_models, function(pomodoro) {
-        var date;
-        date = moment(parseInt(pomodoro.get('created_at'))).format(format);
-        if (today > date) return pomodoro.destroy();
-      });
-    };
-
-    return Pomodoros;
-
-  })(Backbone.Collection);
-
-}).call(this);
-
-  }
-}));
-(this.require.define({
-  "collections/states_collection": function(exports, require, module) {
-    (function() {
-  var State,
-    __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-
-  State = require('models/state_model').State;
-
-  exports.States = (function(_super) {
-
-    __extends(States, _super);
-
-    function States() {
-      States.__super__.constructor.apply(this, arguments);
-    }
-
-    States.prototype.model = State;
-
-    States.prototype.initialize = function() {
-      return this.localStorage = new Store("state");
-    };
-
-    States.prototype.getCurrentState = function() {
-      var first;
-      first = this.first();
-      if (first === void 0) first = this.create();
-      return first;
-    };
-
-    States.prototype.getCurrentStateName = function() {
-      var currentState;
-      currentState = this.getCurrentState();
-      return currentState.get('name');
-    };
-
-    States.prototype.setCurrentStateName = function(name) {
-      var currentState;
-      currentState = this.getCurrentState();
-      return currentState.save({
-        name: name
-      });
-    };
-
-    return States;
-
-  })(Backbone.Collection);
-
-}).call(this);
-
-  }
-}));
-(this.require.define({
-  "collections/notes_collection": function(exports, require, module) {
-    (function() {
-  var Note,
-    __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-
-  Note = require('models/note_model').Note;
-
-  exports.Notes = (function(_super) {
-
-    __extends(Notes, _super);
-
-    function Notes() {
-      Notes.__super__.constructor.apply(this, arguments);
-    }
-
-    Notes.prototype.model = Note;
-
-    Notes.prototype.initialize = function() {
-      return this.localStorage = new Store("notes");
-    };
-
-    return Notes;
-
-  })(Backbone.Collection);
 
 }).call(this);
 
@@ -13417,36 +13395,6 @@ i.rotate(null)}:function(){t=j.selected;n()});if(c){this.element.bind("tabsshow"
   }
 }));
 (this.require.define({
-  "helpers": function(exports, require, module) {
-    (function() {
-
-  exports.BrunchApplication = (function() {
-
-    function BrunchApplication() {
-      var _this = this;
-      this.routers = {};
-      this.models = {};
-      this.collections = {};
-      this.views = {};
-      this.utils = {};
-      jQuery(function() {
-        return _this.initialize(_this);
-      });
-    }
-
-    BrunchApplication.prototype.onReady = function() {
-      return null;
-    };
-
-    return BrunchApplication;
-
-  })();
-
-}).call(this);
-
-  }
-}));
-(this.require.define({
   "views/new_note_view": function(exports, require, module) {
     (function() {
   var newNoteTemplate,
@@ -13486,6 +13434,58 @@ i.rotate(null)}:function(){t=j.selected;n()});if(c){this.element.bind("tabsshow"
     return NewNoteView;
 
   })(Backbone.View);
+
+}).call(this);
+
+  }
+}));
+(this.require.define({
+  "helpers": function(exports, require, module) {
+    (function() {
+
+  exports.BrunchApplication = (function() {
+
+    function BrunchApplication() {
+      var _this = this;
+      this.routers = {};
+      this.models = {};
+      this.collections = {};
+      this.views = {};
+      this.utils = {};
+      jQuery(function() {
+        return _this.initialize(_this);
+      });
+    }
+
+    BrunchApplication.prototype.onReady = function() {
+      return null;
+    };
+
+    return BrunchApplication;
+
+  })();
+
+}).call(this);
+
+  }
+}));
+(this.require.define({
+  "models/pomodoro_model": function(exports, require, module) {
+    (function() {
+  var __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+
+  exports.Pomodoro = (function(_super) {
+
+    __extends(Pomodoro, _super);
+
+    function Pomodoro() {
+      Pomodoro.__super__.constructor.apply(this, arguments);
+    }
+
+    return Pomodoro;
+
+  })(Backbone.Model);
 
 }).call(this);
 
@@ -13600,102 +13600,6 @@ i.rotate(null)}:function(){t=j.selected;n()});if(c){this.element.bind("tabsshow"
   }
 }));
 (this.require.define({
-  "views/notes_view": function(exports, require, module) {
-    (function() {
-  var NoteView, notesTemplate,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-
-  NoteView = require('views/note_view').NoteView;
-
-  notesTemplate = require('./templates/notes');
-
-  exports.NotesView = (function(_super) {
-
-    __extends(NotesView, _super);
-
-    function NotesView() {
-      this.addAll = __bind(this.addAll, this);
-      this.addOne = __bind(this.addOne, this);
-      NotesView.__super__.constructor.apply(this, arguments);
-    }
-
-    NotesView.prototype.id = "notes";
-
-    NotesView.prototype.initialize = function() {
-      app.collections.notes.bind('add', this.addOne);
-      return app.collections.notes.bind('reset', this.addAll);
-    };
-
-    NotesView.prototype.render = function() {
-      $(this.el).html(notesTemplate());
-      return this;
-    };
-
-    NotesView.prototype.addOne = function(note) {
-      var view;
-      view = new NoteView({
-        model: note
-      });
-      return $(this.el).append(view.render().el);
-    };
-
-    NotesView.prototype.addAll = function() {
-      return app.collections.notes.each(this.addOne);
-    };
-
-    return NotesView;
-
-  })(Backbone.View);
-
-}).call(this);
-
-  }
-}));
-(this.require.define({
-  "views/new_column_view": function(exports, require, module) {
-    (function() {
-  var newColumnTemplate,
-    __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-
-  newColumnTemplate = require('./templates/new_column');
-
-  exports.NewColumnView = (function(_super) {
-
-    __extends(NewColumnView, _super);
-
-    function NewColumnView() {
-      NewColumnView.__super__.constructor.apply(this, arguments);
-    }
-
-    NewColumnView.prototype.id = "new-column";
-
-    NewColumnView.prototype.events = {
-      "click #add-column": "create"
-    };
-
-    NewColumnView.prototype.render = function() {
-      this.$(this.el).html(newColumnTemplate());
-      return this;
-    };
-
-    NewColumnView.prototype.create = function() {
-      return app.collections.columns.create({
-        index: app.collections.columns.length
-      });
-    };
-
-    return NewColumnView;
-
-  })(Backbone.View);
-
-}).call(this);
-
-  }
-}));
-(this.require.define({
   "views/stats_view": function(exports, require, module) {
     (function() {
   var statsTemplate,
@@ -13802,6 +13706,60 @@ i.rotate(null)}:function(){t=j.selected;n()});if(c){this.element.bind("tabsshow"
     };
 
     return StatsView;
+
+  })(Backbone.View);
+
+}).call(this);
+
+  }
+}));
+(this.require.define({
+  "views/notes_view": function(exports, require, module) {
+    (function() {
+  var NoteView, notesTemplate,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+
+  NoteView = require('views/note_view').NoteView;
+
+  notesTemplate = require('./templates/notes');
+
+  exports.NotesView = (function(_super) {
+
+    __extends(NotesView, _super);
+
+    function NotesView() {
+      this.addAll = __bind(this.addAll, this);
+      this.addOne = __bind(this.addOne, this);
+      NotesView.__super__.constructor.apply(this, arguments);
+    }
+
+    NotesView.prototype.id = "notes";
+
+    NotesView.prototype.initialize = function() {
+      app.collections.notes.bind('add', this.addOne);
+      return app.collections.notes.bind('reset', this.addAll);
+    };
+
+    NotesView.prototype.render = function() {
+      $(this.el).html(notesTemplate());
+      return this;
+    };
+
+    NotesView.prototype.addOne = function(note) {
+      var view;
+      view = new NoteView({
+        model: note
+      });
+      return $(this.el).append(view.render().el);
+    };
+
+    NotesView.prototype.addAll = function() {
+      return app.collections.notes.each(this.addOne);
+    };
+
+    return NotesView;
 
   })(Backbone.View);
 
@@ -14124,57 +14082,95 @@ i.rotate(null)}:function(){t=j.selected;n()});if(c){this.element.bind("tabsshow"
   }
 }));
 (this.require.define({
-  "assets/scripts/background": function(exports, require, module) {
-    var theTab = undefined;
+  "views/new_column_view": function(exports, require, module) {
+    (function() {
+  var newColumnTemplate,
+    __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-function changedHandler(tab) {
-    var extension_url = chrome.extension.getURL('');
-    if (tab.url.indexOf(extension_url) > -1) {
-        if (theTab) {
-            if (tab.id !== theTab.id) {
-                console.log("duplicated!");
-                chrome.tabs.remove(tab.id);
-                focus_to_the_tab();
-            }
-        } else {
-            console.log("created");
-            theTab = tab
-        }
-    } else {
-        if (theTab && tab.id == theTab.id) {
-            removeHandler(tab.id)
-        }
+  newColumnTemplate = require('./templates/new_column');
+
+  exports.NewColumnView = (function(_super) {
+
+    __extends(NewColumnView, _super);
+
+    function NewColumnView() {
+      NewColumnView.__super__.constructor.apply(this, arguments);
     }
-}
 
-function removeHandler(tabId) {
-    if (theTab && tabId === theTab.id) {
-        console.log("closed");
-        theTab = undefined;
-    }
-}
+    NewColumnView.prototype.id = "new-column";
 
-function focus_to_the_tab() {
-    if (theTab) {
-        chrome.tabs.update(theTab.id, {selected:true});
-    }
-}
+    NewColumnView.prototype.events = {
+      "click #add-column": "create"
+    };
 
-chrome.tabs.onCreated.addListener(function(tab) {
-    changedHandler(tab)
-});
+    NewColumnView.prototype.render = function() {
+      this.$(this.el).html(newColumnTemplate());
+      return this;
+    };
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    changedHandler(tab);
-});
+    NewColumnView.prototype.create = function() {
+      return app.collections.columns.create({
+        index: app.collections.columns.length
+      });
+    };
 
-chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
-    removeHandler(tabId);
-});
+    return NewColumnView;
+
+  })(Backbone.View);
+
+}).call(this);
+
   }
 }));
 (this.require.define({
   "views/templates/notes": function(exports, require, module) {
+    module.exports = function(__obj) {
+  var _safe = function(value) {
+    if (typeof value === 'undefined' && value == null)
+      value = '';
+    var result = new String(value);
+    result.ecoSafe = true;
+    return result;
+  };
+  return (function() {
+    var __out = [], __self = this, _print = function(value) {
+      if (typeof value !== 'undefined' && value != null)
+        __out.push(value.ecoSafe ? value : __self.escape(value));
+    }, _capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return _safe(result);
+    };
+    (function() {
+    
+    
+    
+    }).call(this);
+    
+    return __out.join('');
+  }).call((function() {
+    var obj = {
+      escape: function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      },
+      safe: _safe
+    }, key;
+    for (key in __obj) obj[key] = __obj[key];
+    return obj;
+  })());
+};
+  }
+}));
+(this.require.define({
+  "views/templates/home": function(exports, require, module) {
     module.exports = function(__obj) {
   var _safe = function(value) {
     if (typeof value === 'undefined' && value == null)
@@ -14320,108 +14316,6 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
   }
 }));
 (this.require.define({
-  "views/templates/home": function(exports, require, module) {
-    module.exports = function(__obj) {
-  var _safe = function(value) {
-    if (typeof value === 'undefined' && value == null)
-      value = '';
-    var result = new String(value);
-    result.ecoSafe = true;
-    return result;
-  };
-  return (function() {
-    var __out = [], __self = this, _print = function(value) {
-      if (typeof value !== 'undefined' && value != null)
-        __out.push(value.ecoSafe ? value : __self.escape(value));
-    }, _capture = function(callback) {
-      var out = __out, result;
-      __out = [];
-      callback.call(this);
-      result = __out.join('');
-      __out = out;
-      return _safe(result);
-    };
-    (function() {
-    
-    
-    
-    }).call(this);
-    
-    return __out.join('');
-  }).call((function() {
-    var obj = {
-      escape: function(value) {
-        return ('' + value)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
-      },
-      safe: _safe
-    }, key;
-    for (key in __obj) obj[key] = __obj[key];
-    return obj;
-  })());
-};
-  }
-}));
-(this.require.define({
-  "views/templates/column": function(exports, require, module) {
-    module.exports = function(__obj) {
-  var _safe = function(value) {
-    if (typeof value === 'undefined' && value == null)
-      value = '';
-    var result = new String(value);
-    result.ecoSafe = true;
-    return result;
-  };
-  return (function() {
-    var __out = [], __self = this, _print = function(value) {
-      if (typeof value !== 'undefined' && value != null)
-        __out.push(value.ecoSafe ? value : __self.escape(value));
-    }, _capture = function(callback) {
-      var out = __out, result;
-      __out = [];
-      callback.call(this);
-      result = __out.join('');
-      __out = out;
-      return _safe(result);
-    };
-    (function() {
-    
-      _print(_safe('<div class="display">\n    <h2>'));
-    
-      _print(this.column.title);
-    
-      _print(_safe('<span class="column-destroy"></span></h2>\n</div>\n<div class="edit">\n    <input class="title-input" type="text" value="'));
-    
-      _print(this.column.title);
-    
-      _print(_safe('">\n</div>\n\n'));
-    
-      if (this.column.index > 0) _print(_safe('\n    <div class="border-right"/>\n'));
-    
-    }).call(this);
-    
-    return __out.join('');
-  }).call((function() {
-    var obj = {
-      escape: function(value) {
-        return ('' + value)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
-      },
-      safe: _safe
-    }, key;
-    for (key in __obj) obj[key] = __obj[key];
-    return obj;
-  })());
-};
-  }
-}));
-(this.require.define({
   "views/templates/new_note": function(exports, require, module) {
     module.exports = function(__obj) {
   var _safe = function(value) {
@@ -14446,6 +14340,56 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
     (function() {
     
       _print(_safe('<a class=\'addNote postit\' href=\'#\'></a>\n<a class=\'addNote purple\' href=\'#\'></a>\n<a class=\'addNote green\' href=\'#\'></a>\n<a class=\'addNote orange\' href=\'#\'></a>'));
+    
+    }).call(this);
+    
+    return __out.join('');
+  }).call((function() {
+    var obj = {
+      escape: function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      },
+      safe: _safe
+    }, key;
+    for (key in __obj) obj[key] = __obj[key];
+    return obj;
+  })());
+};
+  }
+}));
+(this.require.define({
+  "views/templates/timer": function(exports, require, module) {
+    module.exports = function(__obj) {
+  var _safe = function(value) {
+    if (typeof value === 'undefined' && value == null)
+      value = '';
+    var result = new String(value);
+    result.ecoSafe = true;
+    return result;
+  };
+  return (function() {
+    var __out = [], __self = this, _print = function(value) {
+      if (typeof value !== 'undefined' && value != null)
+        __out.push(value.ecoSafe ? value : __self.escape(value));
+    }, _capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return _safe(result);
+    };
+    (function() {
+    
+      _print(_safe('<div class="modal-header">\n  <h3>'));
+    
+      _print(this.title);
+    
+      _print(_safe('</h3>\n</div>\n<div class="modal-body">\n    <div id="timer"></div>\n</div>\n<div class="modal-footer">\n    <button id="cancel" class="btn info">opps</button>\n</div>\n'));
     
     }).call(this);
     
@@ -14564,7 +14508,7 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
   }
 }));
 (this.require.define({
-  "views/templates/timer": function(exports, require, module) {
+  "views/templates/column": function(exports, require, module) {
     module.exports = function(__obj) {
   var _safe = function(value) {
     if (typeof value === 'undefined' && value == null)
@@ -14587,11 +14531,17 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
     };
     (function() {
     
-      _print(_safe('<div class="modal-header">\n  <h3>'));
+      _print(_safe('<div class="display">\n    <h2>'));
     
-      _print(this.title);
+      _print(this.column.title);
     
-      _print(_safe('</h3>\n</div>\n<div class="modal-body">\n    <div id="timer"></div>\n</div>\n<div class="modal-footer">\n    <button id="cancel" class="btn info">opps</button>\n</div>\n'));
+      _print(_safe('<span class="column-destroy"></span></h2>\n</div>\n<div class="edit">\n    <input class="title-input" type="text" value="'));
+    
+      _print(this.column.title);
+    
+      _print(_safe('">\n</div>\n\n'));
+    
+      if (this.column.index > 0) _print(_safe('\n    <div class="border-right"/>\n'));
     
     }).call(this);
     
@@ -14611,5 +14561,55 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
     return obj;
   })());
 };
+  }
+}));
+(this.require.define({
+  "assets/scripts/background": function(exports, require, module) {
+    var theTab = undefined;
+
+function changedHandler(tab) {
+    var extension_url = chrome.extension.getURL('');
+    if (tab.url.indexOf(extension_url) > -1) {
+        if (theTab) {
+            if (tab.id !== theTab.id) {
+                console.log("duplicated!");
+                chrome.tabs.remove(tab.id);
+                focus_to_the_tab();
+            }
+        } else {
+            console.log("created");
+            theTab = tab
+        }
+    } else {
+        if (theTab && tab.id == theTab.id) {
+            removeHandler(tab.id)
+        }
+    }
+}
+
+function removeHandler(tabId) {
+    if (theTab && tabId === theTab.id) {
+        console.log("closed");
+        theTab = undefined;
+    }
+}
+
+function focus_to_the_tab() {
+    if (theTab) {
+        chrome.tabs.update(theTab.id, {selected:true});
+    }
+}
+
+chrome.tabs.onCreated.addListener(function(tab) {
+    changedHandler(tab)
+});
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    changedHandler(tab);
+});
+
+chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
+    removeHandler(tabId);
+});
   }
 }));
