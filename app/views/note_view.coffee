@@ -4,6 +4,8 @@ class exports.NoteView extends Backbone.View
   className: "note white"
 
   events:
+    "mouseover"     : "mouseover"
+    "mouseout"      : "mouseout"
     "focus textarea": "focus"
     "blur textarea" : "blur"
     "keyup textarea": "updateContent"
@@ -36,6 +38,12 @@ class exports.NoteView extends Backbone.View
     )
 
     @
+
+  mouseout: (event) ->
+    $('.delete').hide()
+
+  mouseover: (event) ->
+    $('.delete').show()
 
   focus: (event) ->
     if event.currentTarget.value == 'click here to write' then event.currentTarget.value = ''
