@@ -1,10 +1,10 @@
 class exports.MainRouter extends Backbone.Router
   routes :
-    "home"              : "home"
-    "working"           : "working"
-    "resting/:seconds"  : "resting"
-    "stats"             : "stats"
-    "small_timer"       : "small_timer"
+    "home"                : "home"
+    "working"             : "working"
+    "resting/:rest_type"  : "resting"
+    "stats"               : "stats"
+    "small_timer"         : "small_timer"
 
   home: ->
     app.views.home.render()
@@ -16,13 +16,18 @@ class exports.MainRouter extends Backbone.Router
 
   working: ->
     app.views.working.render()
-    app.views.working.startTimer(if app.development == true then 10 else 25 * 60)
-
+    duration = localStorage["pomodoro-duration"]
+    if ! duration then duration = 25
+    app.views.working.startTimer(duration * 60)
     app.collections.states.setCurrentStateName('working')
 
-  resting: (seconds) ->
+  resting: (rest_type) ->
     app.views.resting.render()
-    app.views.resting.startTimer(if app.development == true then 10 else parseInt(seconds))
+    duration = localStorage[rest_type + "-duration"]
+    if ! duration
+        if rest_type == "short" then duration=5
+        if rest_type == "long" then duration=15
+    app.views.resting.startTimer(duration * 60)
 
     app.collections.states.setCurrentStateName('resting/' + seconds)
 

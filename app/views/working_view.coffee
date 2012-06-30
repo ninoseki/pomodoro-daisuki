@@ -9,6 +9,7 @@ class exports.WorkingView extends Backbone.View
 
   render: ->
     @$(@el).html timerTemplate(title: "Working")
+    $('#hide').show()
     @$(@el).modal(backdrop: 'static', show: true)
     @
 
