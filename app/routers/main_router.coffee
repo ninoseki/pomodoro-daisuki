@@ -4,6 +4,7 @@ class exports.MainRouter extends Backbone.Router
     "working"           : "working"
     "resting/:seconds"  : "resting"
     "stats"             : "stats"
+    "small_timer"       : "small_timer"
 
   home: ->
     app.views.home.render()
@@ -28,3 +29,7 @@ class exports.MainRouter extends Backbone.Router
   stats: ->
     app.collections.pomodoros.fetch()
     app.views.stats.render()
+    
+  small_timer: ->
+     $("#modal").modal("show")
+     app.routers.main.navigate('home', true)
