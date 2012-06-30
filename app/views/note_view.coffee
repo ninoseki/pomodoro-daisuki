@@ -40,10 +40,10 @@ class exports.NoteView extends Backbone.View
     @
 
   mouseout: (event) ->
-    $('.delete').hide()
+    @$('.delete').hide()
 
   mouseover: (event) ->
-    $('.delete').show()
+    @$('.delete').show()
 
   focus: (event) ->
     if event.currentTarget.value == 'click here to write' then event.currentTarget.value = ''
