@@ -8,6 +8,7 @@ class exports.RestingView extends Backbone.View
 
   render: ->
     @$(@el).html timerTemplate(title: "Resting")
+    $('#hide').hide()
     @$(@el).modal(backdrop: 'static', show: true)
 
     @

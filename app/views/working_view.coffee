@@ -5,9 +5,11 @@ class exports.WorkingView extends Backbone.View
 
   events:
     "click #cancel": "resetTimer"
+    "click #hide": "hideTimer"
 
   render: ->
     @$(@el).html timerTemplate(title: "Working")
+    $('#hide').show()
     @$(@el).modal(backdrop: 'static', show: true)
     @
 
@@ -18,8 +20,17 @@ class exports.WorkingView extends Backbone.View
       show_in_title: true,
       buzzer: @buzzer
     )
+    $('#small_timer').startTimer(
+      seconds: seconds,
+      reset: false,
+    )
 
   buzzer: =>
+    # hide modal
+    $("#small_timer_container").hide()
+    @$(@el).modal('hide')
+    app.routers.main.navigate('home', true)
+
     # add pomodoro
     app.collections.pomodoros.create(created_at: new Date().getTime())
 
@@ -34,16 +45,16 @@ class exports.WorkingView extends Backbone.View
     )
     notification.show()
 
-    # hide modal
+
+  hideTimer: ->
     @$(@el).modal('hide')
-
-    app.routers.main.navigate('home', true)
-
+    $("#small_timer_container").show()
 
   resetTimer: ->
     $("#timer").clearTimer()
-
+    $("#small_timer").clearTimer()
     # hide modal
     @$(@el).modal('hide')
+    $("#small_timer_container").hide()
 
     app.routers.main.navigate('home', true)
