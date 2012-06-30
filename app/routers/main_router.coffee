@@ -18,7 +18,8 @@ class exports.MainRouter extends Backbone.Router
     app.views.working.render()
     duration = localStorage["pomodoro-duration"]
     if ! duration then duration = 25
-    app.views.working.startTimer(duration * 60)
+
+    app.views.working.startTimer(if app.development == true then 10 else duration * 60)
     app.collections.states.setCurrentStateName('working')
 
   resting: (rest_type) ->
@@ -27,9 +28,9 @@ class exports.MainRouter extends Backbone.Router
     if ! duration
         if rest_type == "short" then duration=5
         if rest_type == "long" then duration=15
-    app.views.resting.startTimer(duration * 60)
+    app.views.resting.startTimer(if app.development == true then 10 else duration * 60)
 
-    app.collections.states.setCurrentStateName('resting/' + seconds)
+    app.collections.states.setCurrentStateName('resting/' + rest_type)
 
   stats: ->
     app.collections.pomodoros.fetch()
