@@ -86,9 +86,14 @@ body
                     border none
                     text-align center
                     resize none
+                    -webkit-box-shadow 0 0px 0px rgba(0,0,0,.85)
+                    box-shadow 0 0px 0px rgba(0,0,0,.85)
 
                 textarea.textedit:focus
                     outline none
+                textarea.textedit:hover
+                    -webkit-box-shadow 0 3px 6px rgba(0,0,0,.85)
+                    box-shadow 0 3px 6px rgba(0,0,0,.85)
 
                 .delete
                     color red
@@ -99,6 +104,7 @@ body
                     top 0px
                     right 3px
                     cursor pointer
+                    display none
 
         #columns
             display -moz-box
