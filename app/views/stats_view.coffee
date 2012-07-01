@@ -1,4 +1,4 @@
-statsTemplate = require('./templates/stats')
+statsTemplate = require('views/templates/stats')
 
 class exports.StatsView extends Backbone.View
   el: "#modal"

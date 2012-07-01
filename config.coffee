@@ -1,27 +1,14 @@
-{languages, plugins} = require 'brunch-extensions'
-
-# Make config loadable via require() for brunch.
 exports.config =
-  # Available plugins:
-  # * AssetsPlugin: copy `app/assets` contents to `build/`
-  plugins: [plugins.AssetsPlugin]
-
-  # Contains a list of output filenames that your application would generate.
-  # Format:
-  #
-  # 'filename': 
-  #   languages:
-  #     'regExp, with which input files will be matched': language class
-  #   order:
-  #     before: [files, that would be loaded before anything else]
-  #     after: [files, that would be loaded after anything else]
-  #
+# See http://brunch.readthedocs.org/en/latest/config.html for documentation.
+  paths:
+    public: 'build'
   files:
-    'scripts/app.js':
-      languages:
-        '\.js$': languages.JavaScriptLanguage
-        '\.coffee$': languages.CoffeeScriptLanguage
-        '\.eco$': languages.EcoLanguage
+    javascripts:
+      defaultExtension: 'coffee'
+      joinTo:
+        'scripts/app.js': /^(app|vendor)/
+        'test/javascripts/test.js': /^test(\/|\\)(?!vendor)/
+        'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/
       order:
         before: [
           'vendor/scripts/console-helper.js'
@@ -36,13 +23,18 @@ exports.config =
           'vendor/scripts/jquery.countdown.js'
         ]
 
-    'styles/app.css':
-      languages:
-        '\.css$': languages.CSSLanguage
-        '\.styl$': languages.StylusLanguage
+    templates:
+      defaultExtension: 'eco'
+      joinTo: 'scripts/app.js'
+
+    stylesheets:
+      defaultExtension: 'styl'
+      joinTo:
+        'styles/app.css': /^(app|vendor)/
+        'test/stylesheets/test.css': /^test/
       order:
         before: [
-            'vendor/styles/bootstrap.css',
-            'vendor/styles/jquery-ui-1.8.16.custom.css'
-          ]
+          'vendor/styles/bootstrap.css',
+          'vendor/styles/jquery-ui-1.8.16.custom.css'
+        ]
         after: []

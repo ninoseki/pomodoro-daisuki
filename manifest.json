@@ -13,6 +13,6 @@
    },
    "name": "Pomodoro Daisuki",
    "permissions": [ "notifications", "tabs" ],
-   "version": "0.45",
+   "version": "0.46",
    "options_page": "build/options.html"
 }

@@ -1,5 +1,5 @@
 {ColumnView} = require('views/column_view')
-columnsTemplate = require('./templates/columns')
+columnsTemplate = require('views/templates/columns')
 
 class exports.ColumnsView extends Backbone.View
   id: "columns"

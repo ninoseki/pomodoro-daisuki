@@ -1,4 +1,4 @@
-newColumnTemplate = require('./templates/new_column')
+newColumnTemplate = require('views/templates/new_column')
 
 class exports.NewColumnView extends Backbone.View
   id: "new-column"

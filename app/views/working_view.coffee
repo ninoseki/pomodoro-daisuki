@@ -1,4 +1,4 @@
-timerTemplate = require('./templates/timer')
+timerTemplate = require('views/templates/timer')
 
 class exports.WorkingView extends Backbone.View
   el: "#modal"

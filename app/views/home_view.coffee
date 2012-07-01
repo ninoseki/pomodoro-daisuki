@@ -1,4 +1,4 @@
-homeTemplate = require('./templates/home')
+homeTemplate = require('views/templates/home')
 
 class exports.HomeView extends Backbone.View
   el: '#main'

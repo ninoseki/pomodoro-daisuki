@@ -1,5 +1,5 @@
 {NoteView} = require('views/note_view')
-notesTemplate = require('./templates/notes')
+notesTemplate = require('views/templates/notes')
 
 class exports.NotesView extends Backbone.View
   id: "notes"
