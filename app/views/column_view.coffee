@@ -1,6 +1,8 @@
-columnTemplate = require('views/templates/column')
+View = require './view'
+template = require './templates/column'
 
-class exports.ColumnView extends Backbone.View
+module.exports = class ColumnView extends View
+  template: template
   className: "column"
 
   events:
@@ -9,24 +11,25 @@ class exports.ColumnView extends Backbone.View
     "click .column-destroy" : "clear"
 
   initialize: ->
-    @model.bind('change', @render)
-    @model.view = @
+    @model.bind 'change', @render
+    @model.view = this
 
-  render: =>
-    $(@el).html columnTemplate(column: @model.toJSON())
-    @
+  getRenderData: ->
+    {
+      column: @model.toJSON()
+    }
 
   edit: ->
-    $(@el).addClass "editing"
+    @$el.addClass "editing"
     $('.title-input').focus()
 
   update: =>
     title = if @$('.title-input').val() == '' then "new" else @$('.title-input').val()
     @model.save title: title
-    $(@el).removeClass "editing"
+    @$el.removeClass "editing"
 
   remove: ->
-    $(@el).remove()
+    @$el.remove()
 
   clear: ->
     @model.clear()

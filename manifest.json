@@ -1,18 +1,21 @@
 {
+   "manifest_version": 2,
    "app": {
       "launch": {
-         "local_path": "build/index.html"
+         "local_path": "public/index.html"
       }
    },
-   "background_page": "build/background.html",
+   "background": {
+       "scripts": ["public/javascripts/background.js"]
+   },
    "description": "Tool for Pomodoro Technique",
    "icons": {
-      "128": "build/images/tomato_128.png",
-      "16": "build/images/tomato_16.png",
-      "32": "build/images/tomato_32.png"
+      "128": "public/images/tomato_128.png",
+      "16": "public/images/tomato_16.png",
+      "32": "public/images/tomato_32.png"
    },
    "name": "Pomodoro Daisuki",
-   "permissions": [ "notifications", "tabs" ],
+   "permissions": [ "notifications", "tabs", "storage"],
    "version": "0.46",
-   "options_page": "build/options.html"
+   "options_page": "public/options.html"
 }

@@ -1,17 +1,24 @@
-timerTemplate = require('views/templates/timer')
+View = require './view'
+application = require 'application'
+template = require './templates/timer'
 
-class exports.RestingView extends Backbone.View
+module.exports = class RestingView extends View
+  template: template
   el: "#modal"
 
   events:
     "click #cancel": "resetTimer"
 
-  render: ->
-    @$(@el).html timerTemplate(title: "Resting")
-    $('#hide').hide()
-    @$(@el).modal(backdrop: 'static', show: true)
+  getRenderData: ->
+    {
+      title: "Resting"
+    }
 
-    @
+  afterRender: ->
+    $('#hide').hide()
+    @$el.modal(backdrop: 'static', show: true)
+
+    this
 
   startTimer: (seconds) =>
     $('#timer').startTimer(
@@ -23,7 +30,7 @@ class exports.RestingView extends Backbone.View
 
   buzzer: =>
     # ring alarm
-    app.audios.alarm.play()
+    application.audios.alarm.play()
 
     # show notification
     notification = webkitNotifications.createNotification(
@@ -34,14 +41,14 @@ class exports.RestingView extends Backbone.View
     notification.show()
 
     # hide modal
-    @$(@el).modal('hide')
+    @$el.modal('hide')
 
-    app.routers.main.navigate('home', true)
+    application.routers.main.navigate('home', true)
 
   resetTimer: ->
     $("#timer").clearTimer()
 
     # hide modal
-    @$(@el).modal('hide')
+    @$el.modal('hide')
 
-    app.routers.main.navigate('home', true)
+    application.router.navigate 'home', true

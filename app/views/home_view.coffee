@@ -1,15 +1,13 @@
-homeTemplate = require('views/templates/home')
+View = require './view'
+application = require 'application'
+template = require './templates/home'
 
-class exports.HomeView extends Backbone.View
+module.exports = class HomeView extends View
+  template: template
   el: '#main'
 
-  render: ->
-    @$(@el).html ""
+  afterRender: ->
+    for viewName in ['notes', 'columns', 'newNote']
+      @$el.append application["#{viewName}View"].render().el
 
-    @$(@el).append app.views.notes.render().el
-    @$(@el).append app.views.columns.render().el
-    @$(@el).append app.views.new_note.render().el
-
-    $("#actions").append app.views.new_column.render().el
-
-    @
+    $("#actions").append application.newColumnView.render().el

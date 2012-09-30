@@ -1,20 +1,19 @@
-{NoteView} = require('views/note_view')
-notesTemplate = require('views/templates/notes')
+View = require './view'
+application = require 'application'
+NoteView = require './note_view'
+template = require './templates/notes'
 
-class exports.NotesView extends Backbone.View
+module.exports = class NotesView extends View
+  template: template
   id: "notes"
 
   initialize: ->
-    app.collections.notes.bind 'add', @addOne
-    app.collections.notes.bind 'reset', @addAll
-
-  render: ->
-    $(@el).html notesTemplate()
-    @
+    application.notes.bind 'add', @addOne
+    application.notes.bind 'reset', @addAll
 
   addOne: (note) =>
     view = new NoteView model: note
-    $(@el).append view.render().el
+    @$el.append view.render().el
 
   addAll: =>
-    app.collections.notes.each @addOne
+    application.notes.each @addOne

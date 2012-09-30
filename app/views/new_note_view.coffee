@@ -1,16 +1,17 @@
-newNoteTemplate = require('views/templates/new_note')
+View = require './view'
+application = require 'application'
+template = require './templates/new_note'
 
-class exports.NewNoteView extends Backbone.View
+module.exports = class NewNoteView extends View
+  template: template
   id: "new-note"
 
   events:
     "click .addNote": "create"
 
-  render: ->
-    @$(@el).html newNoteTemplate()
+  afterRender: ->
     @delegateEvents()
-    @
 
   create: (event) ->
     color = event.currentTarget.className.split(" ")[1]
-    app.collections.notes.create color: color
+    application.notes.create color: color

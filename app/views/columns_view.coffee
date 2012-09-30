@@ -1,38 +1,37 @@
-{ColumnView} = require('views/column_view')
-columnsTemplate = require('views/templates/columns')
+View = require './view'
+ColumnView = require './column_view'
+application = require 'application'
+template = require './templates/columns'
 
-class exports.ColumnsView extends Backbone.View
+module.exports = class ColumnsView extends View
+  template: template
   id: "columns"
 
   initialize: ->
-    app.collections.columns.bind 'add', @addOne
-    app.collections.columns.bind 'reset', @addAll
-    app.collections.columns.bind 'remove', @reindex
-
-  render: ->
-    $(@el).html columnsTemplate()
-    @
+    application.columns.bind 'add', @addOne
+    application.columns.bind 'reset', @addAll
+    application.columns.bind 'remove', @reindex
 
   adjustSize: ->
     width = $('body').width()
-    length = app.collections.columns.length
+    length = application.columns.length
     column_width = width / length
 
     $('.column').each (index) ->
-      $(@).width(column_width)
-      $(@).css('left', index * column_width)
+      $(@).width column_width
+      $(@).css 'left', index * column_width
 
   reindex: =>
-    app.collections.columns.each (column, index) ->
+    application.columns.each (column, index) ->
       column.save index: index
 
     @adjustSize()
 
   addOne: (column) =>
     view = new ColumnView model: column
-    $(@el).append view.render().el
+    @$el.append view.render().el
 
     @adjustSize()
 
   addAll: =>
-    app.collections.columns.each @addOne
+    application.columns.each @addOne

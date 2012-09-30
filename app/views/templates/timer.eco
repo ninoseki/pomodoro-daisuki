@@ -6,6 +6,6 @@
     <div id="timer"></div>
 </div>
 <div class="modal-footer">
-    <button id="cancel" class="btn info">cancel</button>
-    <button id="hide" class="btn success">hide</button>
+    <button id="cancel" class="btn btn-info">cancel</button>
+    <button id="hide" class="btn btn-success">hide</button>
 </div>

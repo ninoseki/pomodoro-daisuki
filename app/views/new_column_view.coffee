@@ -1,15 +1,13 @@
-newColumnTemplate = require('views/templates/new_column')
+View = require './view'
+template = require './templates/new_column'
+application = require 'application'
 
-class exports.NewColumnView extends Backbone.View
+module.exports = class NewColumnView extends View
+  template: template
   id: "new-column"
 
   events:
     "click #add-column": "create"
 
-  render: ->
-    @$(@el).html newColumnTemplate()
-
-    @
-
   create: ->
-    app.collections.columns.create index: app.collections.columns.length
+    application.columns.create index: application.columns.length

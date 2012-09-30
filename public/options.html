@@ -1,0 +1,46 @@
+<html>
+<head><title>Pomodoro Daisuki</title></head>
+<script type="text/javascript">
+
+function save_parameter(name){
+	var input = document.getElementById(name);
+	localStorage[name] = input.value;
+}
+
+function load_parameter(name){
+	var value = localStorage[name];
+	if (!value) {
+		return;
+	}
+	var input = document.getElementById(name);
+	input.value = value;
+}
+
+function save_options() {
+	save_parameter("pomodoro-duration");
+	save_parameter("short-duration");
+	save_parameter("long-duration");
+
+	var status = document.getElementById("status");
+	status.innerHTML = "Options Saved.";
+	setTimeout(function() {
+		status.innerHTML = "";
+	}, 750);
+}
+
+function restore_options() {
+	load_parameter("pomodoro-duration");
+	load_parameter("short-duration");
+	load_parameter("long-duration");
+}
+</script>
+
+<body onload="restore_options()">
+<table>
+<tr><td>Duration of a pomodoro </td><td><input id="pomodoro-duration" size=2 value="25" /></td><td>minutes</td></tr>
+<tr><td>Duration of a short break </td><td><input id="short-duration" size=2 value="5" /></td><td>minutes</td></tr>
+<tr><td>Duration of a long break </td><td><input id="long-duration" size=2 value="15"/></td><td>minutes</td></tr>
+</table>
+<button onclick="save_options()">Save</button> <span id="status"></span>
+</body>
+</html>

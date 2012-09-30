@@ -1,4 +1,6 @@
-class exports.MainRouter extends Backbone.Router
+application = require 'application'
+
+module.exports = class MainRouter extends Backbone.Router
   routes :
     "home"                : "home"
     "working"             : "working"
@@ -7,35 +9,35 @@ class exports.MainRouter extends Backbone.Router
     "small_timer"         : "small_timer"
 
   home: ->
-    app.views.home.render()
-    app.collections.notes.fetch()
-    app.collections.columns.fetch()
+    application.homeView.render()
+    application.notes.fetch()
+    application.columns.fetch()
 
-    app.collections.states.setCurrentStateName('home')
+    application.states.setCurrentStateName('home')
 
 
   working: ->
-    app.views.working.render()
+    application.workingView.render()
     duration = localStorage["pomodoro-duration"]
     if ! duration then duration = 25
 
-    app.views.working.startTimer(if app.development == true then 10 else duration * 60)
-    app.collections.states.setCurrentStateName('working')
+    application.workingView.startTimer(if application.development == true then 10 else duration * 60)
+    application.states.setCurrentStateName('working')
 
   resting: (rest_type) ->
-    app.views.resting.render()
+    application.restingView.render()
     duration = localStorage[rest_type + "-duration"]
     if ! duration
         if rest_type == "short" then duration=5
         if rest_type == "long" then duration=15
-    app.views.resting.startTimer(if app.development == true then 10 else duration * 60)
+    application.restingView.startTimer(if application.development == true then 10 else duration * 60)
 
-    app.collections.states.setCurrentStateName('resting/' + rest_type)
+    application.states.setCurrentStateName('resting/' + rest_type)
 
   stats: ->
-    app.collections.pomodoros.fetch()
-    app.views.stats.render()
+    application.pomodoros.fetch()
+    application.statsView.render()
     
   small_timer: ->
      $("#modal").modal("show")
-     app.routers.main.navigate('home', true)
+     application.router.navigate 'home', true

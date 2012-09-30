@@ -1,6 +1,11 @@
 noteTemplate = require('views/templates/note')
 
-class exports.NoteView extends Backbone.View
+View = require './view'
+application = require 'application'
+template = require './templates/note'
+
+module.exports = class NoteView extends View
+  template: template
   className: "note white"
 
   events:
@@ -16,10 +21,8 @@ class exports.NoteView extends Backbone.View
   initialize: ->
     @model.view = @
 
-  render: ->
-    $(@el).html noteTemplate(note: @model.toJSON())
-
-    $(@el).css(
+  afterRender: ->
+    @$el.css(
       "-webkit-transform" : "rotate(-#{@model.get('angle')}deg)"
       "-moz-transform"    : "rotate(-#{@model.get('angle')}deg)"
       "width"             : @model.get('w')
@@ -29,7 +32,7 @@ class exports.NoteView extends Backbone.View
       "position"          : "absolute"
     )
 
-    $(@el).draggable(
+    @$el.draggable(
       containment: 'parent'
       distance: 10
       opacity: 0.75
@@ -37,7 +40,10 @@ class exports.NoteView extends Backbone.View
       containment: 'parent'
     )
 
-    @
+  getRenderData: ->
+    {
+      note: @model.toJSON()
+    }
 
   mouseout: (event) ->
     @$('.delete').hide()
@@ -54,14 +60,14 @@ class exports.NoteView extends Backbone.View
   updatePosition: (event, ui) ->
     x = ui.position.left
     y = ui.position.top
-    w = $(@el).width()
-    h = $(@el).height()
+    w = @$el.width()
+    h = @$el.height()
 
     @model.save({x: x, y: y, w: w, h: h})
 
   updateSize: (event, ui) ->
-    w = $(@el).width()
-    h = $(@el).height()
+    w = @$el.width()
+    h = @$el.height()
 
     @model.save({w: w, h: h})
 
@@ -70,7 +76,7 @@ class exports.NoteView extends Backbone.View
     @model.save content: content
 
   remove: ->
-    $(@el).remove()
+    @$el.remove()
 
   clear: ->
     @model.clear()

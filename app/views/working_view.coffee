@@ -1,17 +1,25 @@
-timerTemplate = require('views/templates/timer')
+View = require './view'
+application = require 'application'
+template = require './templates/timer'
 
-class exports.WorkingView extends Backbone.View
+module.exports = class WorkingView extends View
+  template: template
   el: "#modal"
 
   events:
     "click #cancel": "resetTimer"
     "click #hide": "hideTimer"
 
-  render: ->
-    @$(@el).html timerTemplate(title: "Working")
+  getRenderData: ->
+    {
+      title: "Working"
+    }
+
+  afterRender: ->
     $('#hide').show()
-    @$(@el).modal(backdrop: 'static', show: true)
-    @
+    @$el.modal(backdrop: 'static', show: true)
+
+    this
 
   startTimer: (seconds) =>
     $('#timer').startTimer(
@@ -20,22 +28,22 @@ class exports.WorkingView extends Backbone.View
       show_in_title: true,
       buzzer: @buzzer
     )
-    $('#small_timer').startTimer(
+    $('#small-timer').startTimer(
       seconds: seconds,
       reset: false,
     )
 
   buzzer: =>
     # hide modal
-    $("#small_timer_container").hide()
-    @$(@el).modal('hide')
-    app.routers.main.navigate('home', true)
+    $("#small-timer-container").hide()
+    @$el.modal('hide')
+    application.router.navigate 'home', true
 
     # add pomodoro
-    app.collections.pomodoros.create(created_at: new Date().getTime())
+    application.pomodoros.create created_at: new Date().getTime()
 
     # ring alarm
-    app.audios.alarm.play()
+    application.audios.alarm.play()
 
     # show notification
     notification = webkitNotifications.createNotification(
@@ -45,16 +53,15 @@ class exports.WorkingView extends Backbone.View
     )
     notification.show()
 
-
   hideTimer: ->
-    @$(@el).modal('hide')
-    $("#small_timer_container").show()
+    @$el.modal('hide')
+    $("#small-timer-container").show()
 
   resetTimer: ->
     $("#timer").clearTimer()
-    $("#small_timer").clearTimer()
+    $("#small-timer").clearTimer()
     # hide modal
-    @$(@el).modal('hide')
-    $("#small_timer_container").hide()
+    @$el.modal('hide')
+    $("#small-timer-container").hide()
 
-    app.routers.main.navigate('home', true)
+    application.router.navigate 'home', true

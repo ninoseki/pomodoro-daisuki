@@ -1,18 +1,26 @@
-statsTemplate = require('views/templates/stats')
+View = require './view'
+application = require 'application'
+template = require './templates/stats'
 
-class exports.StatsView extends Backbone.View
+module.exports = class StatsView extends View
+  template: template
   el: "#modal"
-
   id: "stats"
 
   events:
     "click .close": "close"
 
-  render: ->
-    @$(@el).html statsTemplate(title: "Weekly Stats", count: 0)
+  getRenderData: ->
+    {
+      title: "Weekly Stats",
+      count: 0
+    }
+
+  afterRender: ->
     @showStatsGraph()
-    @$(@el).modal(backdrop: 'static', show: true)
-    @
+    @$el.modal(backdrop: 'static', show: true)
+
+    this
 
   showStatsGraph: ->
     stats = @getWeeklyStats()
@@ -41,14 +49,14 @@ class exports.StatsView extends Backbone.View
   getWeeklyStats: ->
     stats = {}
     for i in [0..6]
-      date = moment().day(i).format(app.settings.date_format)
-      pomodoros = app.collections.pomodoros.filter (pomodoro) ->
-        return date == moment(parseInt(pomodoro.get('created_at'))).format(app.settings.date_format)
+      date = moment().day(i).format(application.settings.date_format)
+      pomodoros = application.pomodoros.filter (pomodoro) ->
+        return date == moment(parseInt(pomodoro.get('created_at'))).format(application.settings.date_format)
       stats[date] = pomodoros.length
     stats
 
   close: =>
     # hide modal
-    @$(@el).modal('hide')
+    @$el.modal('hide')
 
-    app.routers.main.navigate('home', true)
+    application.router.navigate 'home', true
