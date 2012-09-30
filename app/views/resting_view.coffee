@@ -43,7 +43,7 @@ module.exports = class RestingView extends View
     # hide modal
     @$el.modal('hide')
 
-    application.routers.main.navigate('home', true)
+    application.router.navigate 'home', true
 
   resetTimer: ->
     $("#timer").clearTimer()

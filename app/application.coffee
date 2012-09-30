@@ -39,7 +39,7 @@ Application =
     @settings = {}
     @settings.date_format = "YYYY-MM-DD"
 
-    @development = false
+    @development = true
 
     # Freeze the object
     Object.freeze? Application

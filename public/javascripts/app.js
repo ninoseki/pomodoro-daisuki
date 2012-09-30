@@ -110,7 +110,7 @@ window.require.define({"application": function(exports, require, module) {
       this.audios.alarm = new Audio("audios/alarm.wav");
       this.settings = {};
       this.settings.date_format = "YYYY-MM-DD";
-      this.development = false;
+      this.development = true;
       return typeof Object.freeze === "function" ? Object.freeze(Application) : void 0;
     }
   };
@@ -1020,7 +1020,7 @@ window.require.define({"views/resting_view": function(exports, require, module) 
       notification = webkitNotifications.createNotification('images/tomato_32.png', 'notification', 'resting is done!');
       notification.show();
       this.$el.modal('hide');
-      return application.routers.main.navigate('home', true);
+      return application.router.navigate('home', true);
     };
 
     RestingView.prototype.resetTimer = function() {

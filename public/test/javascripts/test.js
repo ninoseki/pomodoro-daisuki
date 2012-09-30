@@ -172,6 +172,12 @@ window.require.define({"test/models/note_test": function(exports, require, modul
   
 }});
 
+window.require.define({"test/spec": function(exports, require, module) {
+  
+
+  
+}});
+
 window.require.define({"test/test-helpers": function(exports, require, module) {
   var Helper, chai, sinonChai;
 
