@@ -17,8 +17,8 @@ module.exports = class StatsView extends View
     }
 
   afterRender: ->
-    @showStatsGraph()
     @$el.modal(backdrop: 'static', show: true)
+    @showStatsGraph()
 
     this
 
