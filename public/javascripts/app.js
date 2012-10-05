@@ -1074,11 +1074,11 @@ window.require.define({"views/stats_view": function(exports, require, module) {
     };
 
     StatsView.prototype.afterRender = function() {
-      this.showStatsGraph();
       this.$el.modal({
         backdrop: 'static',
         show: true
       });
+      this.showStatsGraph();
       return this;
     };
 

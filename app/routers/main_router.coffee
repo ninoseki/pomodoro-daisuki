@@ -28,8 +28,8 @@ module.exports = class MainRouter extends Backbone.Router
     application.restingView.render()
     duration = localStorage[rest_type + "-duration"]
     if ! duration
-        if rest_type == "short" then duration=5
-        if rest_type == "long" then duration=15
+        if rest_type == "short" then duration = 5
+        if rest_type == "long" then duration = 15
     application.restingView.startTimer(if application.development == true then 10 else duration * 60)
 
     application.states.setCurrentStateName('resting/' + rest_type)
