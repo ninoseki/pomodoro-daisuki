@@ -6,7 +6,7 @@ module.exports = class MainRouter extends Backbone.Router
     "working"             : "working"
     "resting/:rest_type"  : "resting"
     "stats"               : "stats"
-    "small_timer"         : "small_timer"
+    "small-timer"         : "small_timer"
 
   home: ->
     application.homeView.render()

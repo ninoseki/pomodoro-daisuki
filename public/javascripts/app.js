@@ -456,7 +456,7 @@ window.require.define({"routers/main_router": function(exports, require, module)
       "working": "working",
       "resting/:rest_type": "resting",
       "stats": "stats",
-      "small_timer": "small_timer"
+      "small-timer": "small_timer"
     };
 
     MainRouter.prototype.home = function() {
