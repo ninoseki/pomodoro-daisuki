@@ -5,7 +5,7 @@ https://chrome.google.com/webstore/detail/nbggjgoannejpkpeamcdmnpdngnpkcln
 
 Pomodoro Daisuki is a tool for Pomodoro Technique.
 
-Thisa app built with Brunch.
+This app is built with Brunch.
 
 
 Contributors
