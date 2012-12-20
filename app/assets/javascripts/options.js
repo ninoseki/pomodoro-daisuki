@@ -31,9 +31,9 @@ function restore_options() {
 }
 
 $(function() {
-    restore_options();
+    OptionsView = require('/views/options_view');
+    optionsView = new OptionsView();
+    console.debug(optionsView);
+    optionsView.render();
 
-    $('#submit').click(function() {
-       save_options();
-    });
 });

@@ -172,6 +172,37 @@ window.require.define({"test/models/note_test": function(exports, require, modul
   
 }});
 
+window.require.define({"test/models/timer_config_test": function(exports, require, module) {
+  var TimerConfig;
+
+  TimerConfig = require('models/timer_config');
+
+  describe('TimerConfig Model', function() {
+    beforeEach(function() {
+      localStorage.clear();
+      return this.timerConfig = new TimerConfig();
+    });
+    it('should set defaults', function() {
+      (expect(this.timerConfig.get('pomodoroDuration'))).to.equal(25);
+      (expect(this.timerConfig.get('shortBreakDuration'))).to.equal(5);
+      return (expect(this.timerConfig.get('longBreakDuration'))).to.equal(15);
+    });
+    return it('should update', function() {
+      var data;
+      data = {
+        pomodoroDuration: 100,
+        shortBreakDuration: 110,
+        longBreakDuration: 120
+      };
+      this.timerConfig.update(data);
+      (expect(this.timerConfig.get('pomodoroDuration'))).to.equal(100);
+      (expect(this.timerConfig.get('shortBreakDuration'))).to.equal(110);
+      return (expect(this.timerConfig.get('longBreakDuration'))).to.equal(120);
+    });
+  });
+  
+}});
+
 window.require.define({"test/spec": function(exports, require, module) {
   
 
@@ -297,6 +328,7 @@ window.require.define({"test/views/working_view_test": function(exports, require
 window.require('test/collections/stats_test');
 window.require('test/models/column_test');
 window.require('test/models/note_test');
+window.require('test/models/timer_config_test');
 window.require('test/views/column_view_test');
 window.require('test/views/columns_view_test');
 window.require('test/views/home_view_test');

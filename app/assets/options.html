@@ -1,27 +1,38 @@
 <html>
-<head><title>Pomodoro Daisuki</title></head>
-<script type="text/javascript" src="javascripts/vendor.js"></script>
-<script type="text/javascript" src="javascripts/options.js"></script>
 
+<head>
+    <meta charset="utf-8">
+    <title>Pomodoro Daisuki</title>
+
+    <link rel="shortcut icon" href="images/tomato_16.png" type="image/png"/>
+    <link rel="stylesheet" href="stylesheets/app.css">
+    <link rel="stylesheet" href="stylesheets/options.css">
+    <script type="text/javascript" src="javascripts/vendor.js"></script>
+    <script type="text/javascript" src="javascripts/app.js"></script>
+    <script type="text/javascript" src="javascripts/options.js"></script>
+</head>
 <body>
-<table>
-    <tr>
-        <td>Duration of a pomodoro</td>
-        <td><input id="pomodoro-duration" size=2 value="25"/></td>
-        <td>minutes</td>
-    </tr>
-    <tr>
-        <td>Duration of a short break</td>
-        <td><input id="short-duration" size=2 value="5"/></td>
-        <td>minutes</td>
-    </tr>
-    <tr>
-        <td>Duration of a long break</td>
-        <td><input id="long-duration" size=2 value="15"/></td>
-        <td>minutes</td>
-    </tr>
-</table>
-<button id="submit">Save</button>
-<span id="status"></span>
+<!-- navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <img class="brand-image" src="images/tomato_32.png" alt="tomato">
+            <a class="brand" href="#">Pomodoro Daisuki</a>
+        </div>
+    </div>
+</div>
+<!-- /navbar -->
+
+<!-- main -->
+<div id ="main">
+    <div class="container">
+        <div id="modal" class="modal">
+
+        </div>
+    </div>
+</div>
+<!-- /main -->
+
+
 </body>
 </html>

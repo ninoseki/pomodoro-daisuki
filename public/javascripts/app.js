@@ -110,7 +110,7 @@ window.require.define({"application": function(exports, require, module) {
       this.audios.alarm = new Audio("audios/alarm.wav");
       this.settings = {};
       this.settings.date_format = "YYYY-MM-DD";
-      this.development = true;
+      this.development = false;
       return typeof Object.freeze === "function" ? Object.freeze(Application) : void 0;
     }
   };
@@ -436,12 +436,53 @@ window.require.define({"models/state": function(exports, require, module) {
   
 }});
 
+window.require.define({"models/timer_config": function(exports, require, module) {
+  var Model, TimerConfig,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Model = require('./model');
+
+  module.exports = TimerConfig = (function(_super) {
+
+    __extends(TimerConfig, _super);
+
+    function TimerConfig() {
+      return TimerConfig.__super__.constructor.apply(this, arguments);
+    }
+
+    TimerConfig.prototype.initialize = function() {
+      var _ref, _ref1, _ref2;
+      this.set('pomodoroDuration', (_ref = localStorage.getItem('pomodoroDuration')) != null ? _ref : 25);
+      this.set('shortBreakDuration', (_ref1 = localStorage.getItem('shortBreakDuration')) != null ? _ref1 : 5);
+      return this.set('longBreakDuration', (_ref2 = localStorage.getItem('longBreakDuration')) != null ? _ref2 : 15);
+    };
+
+    TimerConfig.prototype.update = function(data) {
+      var key, value, _results;
+      _results = [];
+      for (key in data) {
+        value = data[key];
+        localStorage.setItem(key, value);
+        _results.push(this.set(key, value));
+      }
+      return _results;
+    };
+
+    return TimerConfig;
+
+  })(Model);
+  
+}});
+
 window.require.define({"routers/main_router": function(exports, require, module) {
-  var MainRouter, application,
+  var MainRouter, TimerConfig, application,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   application = require('application');
+
+  TimerConfig = require('../models/timer_config');
 
   module.exports = MainRouter = (function(_super) {
 
@@ -456,39 +497,34 @@ window.require.define({"routers/main_router": function(exports, require, module)
       "working": "working",
       "resting/:rest_type": "resting",
       "stats": "stats",
-      "small-timer": "small_timer"
+      "small-timer": "smallTimer"
     };
 
-    MainRouter.prototype.home = function() {
+    MainRouter.prototype.initialize = function() {
+      return this.timerConfig = new TimerConfig();
+    };
+
+    MainRouter.prototype.home = function(type) {
       application.homeView.render();
       application.notes.fetch();
       application.columns.fetch();
-      return application.states.setCurrentStateName('home');
+      if (type !== 'onWorking') {
+        return application.states.setCurrentStateName('home');
+      }
     };
 
     MainRouter.prototype.working = function() {
       var duration;
       application.workingView.render();
-      duration = localStorage["pomodoro-duration"];
-      if (!duration) {
-        duration = 25;
-      }
+      duration = this.timerConfig.get('pomodoroDuration');
       application.workingView.startTimer(application.development === true ? 10 : duration * 60);
       return application.states.setCurrentStateName('working');
     };
 
-    MainRouter.prototype.resting = function(rest_type) {
+    MainRouter.prototype.resting = function(restType) {
       var duration;
       application.restingView.render();
-      duration = localStorage[rest_type + "-duration"];
-      if (!duration) {
-        if (rest_type === "short") {
-          duration = 5;
-        }
-        if (rest_type === "long") {
-          duration = 15;
-        }
-      }
+      duration = this.timerConfig.get(restType + 'BreakDuration');
       application.restingView.startTimer(application.development === true ? 10 : duration * 60);
       return application.states.setCurrentStateName('resting/' + rest_type);
     };
@@ -498,9 +534,9 @@ window.require.define({"routers/main_router": function(exports, require, module)
       return application.statsView.render();
     };
 
-    MainRouter.prototype.small_timer = function() {
+    MainRouter.prototype.smallTimer = function() {
       $("#modal").modal("show");
-      return application.router.navigate('home', true);
+      return application.router.navigate('home/onWorking', true);
     };
 
     return MainRouter;
@@ -954,6 +990,57 @@ window.require.define({"views/notes_view": function(exports, require, module) {
     };
 
     return NotesView;
+
+  })(View);
+  
+}});
+
+window.require.define({"views/options_view": function(exports, require, module) {
+  var OptionsView, TimerConfig, View, template,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  View = require('./view');
+
+  TimerConfig = require('../models/timer_config');
+
+  template = require('./templates/options');
+
+  module.exports = OptionsView = (function(_super) {
+
+    __extends(OptionsView, _super);
+
+    function OptionsView() {
+      return OptionsView.__super__.constructor.apply(this, arguments);
+    }
+
+    OptionsView.prototype.template = template;
+
+    OptionsView.prototype.el = "#modal";
+
+    OptionsView.prototype.events = {
+      "click #update": "update"
+    };
+
+    OptionsView.prototype.initialize = function() {
+      return this.timerConfig = new TimerConfig();
+    };
+
+    OptionsView.prototype.getRenderData = function() {
+      return this.timerConfig.toJSON();
+    };
+
+    OptionsView.prototype.update = function() {
+      var data;
+      data = {
+        pomodoroDuration: $('#inputPomodoroDuration').val(),
+        shortBreakDuration: $('#inputShortBreakDuration').val(),
+        longBreakDuration: $('#inputLongBreakDuration').val()
+      };
+      return this.timerConfig.update(data);
+    };
+
+    return OptionsView;
 
   })(View);
   
@@ -1522,6 +1609,69 @@ window.require.define({"views/templates/notes": function(exports, require, modul
       (function() {
       
       
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  }
+}});
+
+window.require.define({"views/templates/options": function(exports, require, module) {
+  module.exports = function (__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+      
+        __out.push('<div class="modal-header">\n    <h3>Options</h3>\n</div>\n<div class="modal-body">\n    <form class="form-horizontal">\n        <div class="control-group">\n            <label class="control-label" for="inputPomodoroDuration">Duration of a pomodoro</label>\n            <div class="controls input-append">\n                <input class="input-small" type="number" id="inputPomodoroDuration" value="');
+      
+        __out.push(__sanitize(this.pomodoroDuration));
+      
+        __out.push('"><span class="add-on">minutes</span>\n            </div>\n        </div>\n        <div class="control-group">\n            <label class="control-label" for="inputDurationShortBreak">Duration of a short break</label>\n            <div class="controls input-append">\n                <input class="input-small" type="number" id="inputShortBreakDuration" value="');
+      
+        __out.push(__sanitize(this.shortBreakDuration));
+      
+        __out.push('"><span class="add-on">minutes</span>\n            </div>\n        </div>\n        <div class="control-group">\n            <label class="control-label" for="inputDurationLongBreak">Duration of a long break</label>\n            <div class="controls input-append">\n                <input class="input-small" type="number" id="inputLongBreakDuration" value="');
+      
+        __out.push(__sanitize(this.longBreakDuration));
+      
+        __out.push('"><span class="add-on">minutes</span>\n            </div>\n        </div>\n    </form>\n</div>\n<div class="modal-footer">\n    <a href="#" id="update" class="btn btn-primary">Save changes</a>\n</div>');
       
       }).call(this);
       

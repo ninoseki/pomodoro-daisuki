@@ -1,4 +1,5 @@
 application = require 'application'
+TimerConfig = require '../models/timer_config'
 
 module.exports = class MainRouter extends Backbone.Router
   routes :
@@ -6,30 +7,29 @@ module.exports = class MainRouter extends Backbone.Router
     "working"             : "working"
     "resting/:rest_type"  : "resting"
     "stats"               : "stats"
-    "small-timer"         : "small_timer"
+    "small-timer"         : "smallTimer"
 
-  home: ->
+  initialize: ->
+    @timerConfig = new TimerConfig()
+
+  home: (type) ->
     application.homeView.render()
     application.notes.fetch()
     application.columns.fetch()
 
-    application.states.setCurrentStateName('home')
-
+    if type != 'onWorking'
+      application.states.setCurrentStateName('home')
 
   working: ->
     application.workingView.render()
-    duration = localStorage["pomodoro-duration"]
-    if ! duration then duration = 25
+    duration = @timerConfig.get 'pomodoroDuration'
 
     application.workingView.startTimer(if application.development == true then 10 else duration * 60)
     application.states.setCurrentStateName('working')
 
-  resting: (rest_type) ->
+  resting: (restType) ->
     application.restingView.render()
-    duration = localStorage[rest_type + "-duration"]
-    if ! duration
-        if rest_type == "short" then duration = 5
-        if rest_type == "long" then duration = 15
+    duration = @timerConfig.get restType + 'BreakDuration'
     application.restingView.startTimer(if application.development == true then 10 else duration * 60)
 
     application.states.setCurrentStateName('resting/' + rest_type)
@@ -38,6 +38,7 @@ module.exports = class MainRouter extends Backbone.Router
     application.pomodoros.fetch()
     application.statsView.render()
     
-  small_timer: ->
+  smallTimer: ->
      $("#modal").modal("show")
-     application.router.navigate 'home', true
+
+     application.router.navigate 'home/onWorking', true

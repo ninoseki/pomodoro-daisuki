@@ -12,6 +12,7 @@ Contributors
 ============
 
 * [jcplessis](https://github.com/jcplessis)
+* [klamping](https://github.com/klamping)
 
 *Thank you!*
 

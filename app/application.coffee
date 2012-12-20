@@ -15,6 +15,7 @@ Application =
     WorkingView = require 'views/working_view'
     RestingView = require 'views/resting_view'
     StatsView = require 'views/stats_view'
+
     MainRouter = require 'routers/main_router'
 
     @router = new MainRouter()
@@ -39,7 +40,7 @@ Application =
     @settings = {}
     @settings.date_format = "YYYY-MM-DD"
 
-    @development = true
+    @development = false
 
     # Freeze the object
     Object.freeze? Application
