@@ -1,6 +1,6 @@
 {
    "name": "Pomodoro Daisuki",
-   "version": "0.50",
+   "version": "0.51",
    "manifest_version": 2,
    "description": "Tool for Pomodoro Technique",
     "icons": {

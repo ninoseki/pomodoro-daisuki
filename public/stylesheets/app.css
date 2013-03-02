@@ -6676,21 +6676,29 @@ body #main #add-column {
 body #main #add-column:hover {
   opacity: 0.5;
 }
-#modal .modal-header #cancel {
+#timer-modal .modal-header #cancel,
+#stats-modal .modal-header #cancel,
+#options-modal .modal-header #cancel {
   text-align: right;
 }
-#modal .modal-body {
+#timer-modal .modal-body,
+#stats-modal .modal-body,
+#options-modal .modal-body {
   min-height: 100px;
   margin-top: 40px;
   text-align: center;
   font-family: "Lucida Sans Unicode" "Lucida Grande" sans-serif;
 }
-#modal .modal-body #timer {
+#timer-modal .modal-body #timer,
+#stats-modal .modal-body #timer,
+#options-modal .modal-body #timer {
   margin: 5px 0px 0px 5px;
   font-size: 80px;
   text-shadow: 4px 4px 5px #d3d3d3;
 }
-#modal .modal-body #stats {
+#timer-modal .modal-body #stats,
+#stats-modal .modal-body #stats,
+#options-modal .modal-body #stats {
   font-size: 24px;
   text-shadow: none;
 }

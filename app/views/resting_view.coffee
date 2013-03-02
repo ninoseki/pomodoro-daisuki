@@ -4,7 +4,7 @@ template = require './templates/timer'
 
 module.exports = class RestingView extends View
   template: template
-  el: "#modal"
+  el: "#timer-modal"
 
   events:
     "click #cancel": "resetTimer"

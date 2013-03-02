@@ -494,8 +494,9 @@ window.require.define({"routers/main_router": function(exports, require, module)
 
     MainRouter.prototype.routes = {
       "home": "home",
+      "home/:type": "home",
       "working": "working",
-      "resting/:rest_type": "resting",
+      "resting/:restType": "resting",
       "stats": "stats",
       "small-timer": "smallTimer"
     };
@@ -526,7 +527,7 @@ window.require.define({"routers/main_router": function(exports, require, module)
       application.restingView.render();
       duration = this.timerConfig.get(restType + 'BreakDuration');
       application.restingView.startTimer(application.development === true ? 10 : duration * 60);
-      return application.states.setCurrentStateName('resting/' + rest_type);
+      return application.states.setCurrentStateName('resting/' + restType);
     };
 
     MainRouter.prototype.stats = function() {
@@ -535,7 +536,7 @@ window.require.define({"routers/main_router": function(exports, require, module)
     };
 
     MainRouter.prototype.smallTimer = function() {
-      $("#modal").modal("show");
+      $("#timer-modal").modal("show");
       return application.router.navigate('home/onWorking', true);
     };
 
@@ -1016,7 +1017,7 @@ window.require.define({"views/options_view": function(exports, require, module) 
 
     OptionsView.prototype.template = template;
 
-    OptionsView.prototype.el = "#modal";
+    OptionsView.prototype.el = "#options-modal";
 
     OptionsView.prototype.events = {
       "click #update": "update"
@@ -1071,7 +1072,7 @@ window.require.define({"views/resting_view": function(exports, require, module) 
 
     RestingView.prototype.template = template;
 
-    RestingView.prototype.el = "#modal";
+    RestingView.prototype.el = "#timer-modal";
 
     RestingView.prototype.events = {
       "click #cancel": "resetTimer"
@@ -1145,7 +1146,7 @@ window.require.define({"views/stats_view": function(exports, require, module) {
 
     StatsView.prototype.template = template;
 
-    StatsView.prototype.el = "#modal";
+    StatsView.prototype.el = "#stats-modal";
 
     StatsView.prototype.id = "stats";
 
@@ -1231,8 +1232,14 @@ window.require.define({"views/stats_view": function(exports, require, module) {
     };
 
     StatsView.prototype.close = function() {
+      var currentStateName;
       this.$el.modal('hide');
-      return application.router.navigate('home', true);
+      currentStateName = application.states.getCurrentStateName();
+      if (currentStateName === "working") {
+        return application.router.navigate('home/onWorking', true);
+      } else {
+        return application.router.navigate('home', true);
+      }
     };
 
     return StatsView;
@@ -1850,7 +1857,7 @@ window.require.define({"views/working_view": function(exports, require, module) 
 
     WorkingView.prototype.template = template;
 
-    WorkingView.prototype.el = "#modal";
+    WorkingView.prototype.el = "#timer-modal";
 
     WorkingView.prototype.events = {
       "click #cancel": "resetTimer",
@@ -1864,7 +1871,7 @@ window.require.define({"views/working_view": function(exports, require, module) 
     };
 
     WorkingView.prototype.afterRender = function() {
-      $('#hide').show();
+      this.$el.find('#hide').show();
       this.$el.modal({
         backdrop: 'static',
         show: true
@@ -1889,13 +1896,13 @@ window.require.define({"views/working_view": function(exports, require, module) 
       var notification;
       $("#small-timer-container").hide();
       this.$el.modal('hide');
-      application.router.navigate('home', true);
       application.pomodoros.create({
         created_at: new Date().getTime()
       });
       application.audios.alarm.play();
       notification = webkitNotifications.createNotification('images/tomato_32.png', 'notification', 'pomodoro is done!');
-      return notification.show();
+      notification.show();
+      return application.router.navigate('home', true);
     };
 
     WorkingView.prototype.hideTimer = function() {

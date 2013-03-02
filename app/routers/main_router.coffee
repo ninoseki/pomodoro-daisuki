@@ -3,10 +3,11 @@ TimerConfig = require '../models/timer_config'
 
 module.exports = class MainRouter extends Backbone.Router
   routes :
-    "home"                : "home"
-    "working"             : "working"
-    "resting/:rest_type"  : "resting"
-    "stats"               : "stats"
+    "home"                  :"home"
+    "home/:type"            :"home"
+    "working"               : "working"
+    "resting/:restType"  : "resting"
+    "stats"                 : "stats"
     "small-timer"         : "smallTimer"
 
   initialize: ->
@@ -32,13 +33,13 @@ module.exports = class MainRouter extends Backbone.Router
     duration = @timerConfig.get restType + 'BreakDuration'
     application.restingView.startTimer(if application.development == true then 10 else duration * 60)
 
-    application.states.setCurrentStateName('resting/' + rest_type)
+    application.states.setCurrentStateName('resting/' + restType)
 
   stats: ->
     application.pomodoros.fetch()
     application.statsView.render()
     
   smallTimer: ->
-     $("#modal").modal("show")
+    $("#timer-modal").modal("show")
 
-     application.router.navigate 'home/onWorking', true
+    application.router.navigate 'home/onWorking', true

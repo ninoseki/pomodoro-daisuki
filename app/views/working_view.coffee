@@ -4,7 +4,7 @@ template = require './templates/timer'
 
 module.exports = class WorkingView extends View
   template: template
-  el: "#modal"
+  el: "#timer-modal"
 
   events:
     "click #cancel": "resetTimer"
@@ -16,7 +16,7 @@ module.exports = class WorkingView extends View
     }
 
   afterRender: ->
-    $('#hide').show()
+    @$el.find('#hide').show()
     @$el.modal(backdrop: 'static', show: true)
 
     this
@@ -37,14 +37,11 @@ module.exports = class WorkingView extends View
     # hide modal
     $("#small-timer-container").hide()
     @$el.modal('hide')
-    application.router.navigate 'home', true
 
     # add pomodoro
     application.pomodoros.create created_at: new Date().getTime()
-
     # ring alarm
     application.audios.alarm.play()
-
     # show notification
     notification = webkitNotifications.createNotification(
       'images/tomato_32.png',
@@ -52,6 +49,8 @@ module.exports = class WorkingView extends View
       'pomodoro is done!'
     )
     notification.show()
+
+    application.router.navigate 'home', true
 
   hideTimer: ->
     @$el.modal('hide')

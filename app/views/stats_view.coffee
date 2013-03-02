@@ -4,7 +4,7 @@ template = require './templates/stats'
 
 module.exports = class StatsView extends View
   template: template
-  el: "#modal"
+  el: "#stats-modal"
   id: "stats"
 
   events:
@@ -59,4 +59,8 @@ module.exports = class StatsView extends View
     # hide modal
     @$el.modal('hide')
 
-    application.router.navigate 'home', true
+    currentStateName = application.states.getCurrentStateName()
+    if currentStateName == "working"
+      application.router.navigate 'home/onWorking', true
+    else
+      application.router.navigate 'home', true

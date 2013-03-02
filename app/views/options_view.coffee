@@ -4,7 +4,7 @@ template = require './templates/options'
 
 module.exports = class OptionsView extends View
   template: template
-  el: "#modal"
+  el: "#options-modal"
 
   events:
     "click #update": "update"
